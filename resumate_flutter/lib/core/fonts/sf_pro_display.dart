@@ -36,6 +36,8 @@ class SfProDisplay extends StatelessWidget {
       style: TextStyle(
         color: effectiveTextColor,
         fontFamily: 'SFPRO',
+
+        height: 2,
         fontSize: fontSize == 0 ? 36 : fontSize,
         fontWeight: fontWeight,
         decoration: underline ? TextDecoration.underline : TextDecoration.none,
