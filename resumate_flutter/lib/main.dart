@@ -3,6 +3,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:resumate_flutter/core/theme/app_theme.dart';
 import 'package:resumate_flutter/core/widgets/splash_screen.dart';
 import 'package:resumate_flutter/features/auth/view/onboarding.dart';
+import 'package:resumate_flutter/features/auth/view/otp.dart';
 import 'package:resumate_flutter/features/auth/view/sign_in.dart';
 import 'package:resumate_flutter/features/auth/view/sign_up.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.lightMode,
-      home: const SignIn(),
+      home: const OTP(),
     );
   }
 }
