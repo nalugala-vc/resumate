@@ -37,6 +37,8 @@ dependencies:
   get: ^4.6.6
   heroicons: ^0.11.0
   flutter_otp_text_field: ^1.1.0+2
+  google_fonts: ^6.1.0
+  readmore: ^2.1.0
 
 dev_dependencies:
   flutter_test:
