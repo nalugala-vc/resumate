@@ -157,7 +157,7 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
           child: SfProDisplay(
             text: 'Key Career Aspects',
             textColor: AppPallete.black,
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: FontWeight.w700,
             textAlignment: TextAlign.left,
           ),

@@ -6,8 +6,8 @@ class AppPallete {
   static const Color primary200 = Color(0xFFB6E2E2);
   static const Color pink400 = Color(0xFFFDB7B9);
   static const Color pink100 = Color(0xFFFFF8F8);
-  static const Color primary1 = Color(0xFFFF73A6);
-  static const Color primary2 = Color(0xFFFC3F84);
+  static const Color lightOrange400 = Color(0xFFEAB499);
+  static const Color lightOrange100 = Color(0xFFFFE8DC);
   static const Color borderColor = Color.fromRGBO(52, 51, 67, 1);
   static const Color whiteColor = Colors.white;
   static const Color greyColor = Color(0xFF707070);
