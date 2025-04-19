@@ -8,12 +8,14 @@ class SfProDisplay extends StatelessWidget {
   final FontWeight fontWeight;
   final int truncateLength;
   final TextAlign textAlignment;
+  final double lineheight;
   final bool underline;
 
   SfProDisplay({
     super.key,
     required this.text,
     this.shouldTruncate = true,
+    this.lineheight = 2,
     this.textColor,
     this.fontSize = 0,
     this.truncateLength = 45,
@@ -37,7 +39,7 @@ class SfProDisplay extends StatelessWidget {
         color: effectiveTextColor,
         fontFamily: 'SFPRO',
 
-        height: 2,
+        height: lineheight,
         fontSize: fontSize == 0 ? 36 : fontSize,
         fontWeight: fontWeight,
         decoration: underline ? TextDecoration.underline : TextDecoration.none,
