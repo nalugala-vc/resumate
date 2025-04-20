@@ -5,6 +5,14 @@ import 'package:resumate_flutter/core/widgets/custom_nav_bar.dart';
 import 'package:resumate_flutter/features/feed/view/pages/job_details.dart';
 import 'package:resumate_flutter/features/feed/view/pages/job_matches.dart';
 import 'package:resumate_flutter/features/feed/view/pages/roadmap.dart';
+import 'package:resumate_flutter/features/feed/view/pages/video_player.dart';
+import 'package:resumate_flutter/features/quiz/view/pages/AI_chat.dart';
+import 'package:resumate_flutter/features/quiz/view/pages/quiz_page.dart';
+
+/* UNFORMATTED PAGES
+
+VIDEO PLAYER PAGE
+QUIZ PAGE*/
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.lightMode,
-      home: JobDetailsPage(),
+      home: AIChatPage(),
     );
   }
 }
