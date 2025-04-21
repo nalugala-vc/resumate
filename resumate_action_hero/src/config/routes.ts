@@ -15,18 +15,6 @@ export const DEFAULT: { [namespace]: () => RoutesConfig } = {
         { path: "/status", action: "status" },
         { path: "/swagger", action: "swagger" },
         { path: "/createChatRoom", action: "createChatRoom" },
-        { path: "/users", action: "user:list" },
-        { path: "/users/:id", action: "user:get" },
-      ],
-
-      post: [
-        { path: "/users", action: "user:create" },
-      ],
-      put: [
-        // Add update routes here
-      ],
-      delete: [
-        // Add delete routes here
       ],
 
       /* ---------------------

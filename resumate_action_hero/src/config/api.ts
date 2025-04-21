@@ -59,15 +59,6 @@ export const DEFAULT = {
       rpcTimeout: 5000,
       // should CLI methods and help include internal Actionhero CLI methods?
       cliIncludeInternal: true,
-
-      servers: {
-        web: true,
-        websocket: true,
-      },
-      
-      // Enable routes
-      routes: true,
-
       // configuration for your actionhero project structure
       paths: {
         action: [path.join(__dirname, "..", "actions")],
@@ -90,7 +81,6 @@ export const DEFAULT = {
         // format is {roomName: {authKey, authValue}}
         // 'secureRoom': {authorized: true},
       } as Record<string, Record<string, any>>,
-
     };
   },
 };
