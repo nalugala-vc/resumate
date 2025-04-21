@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:resumate_flutter/core/fonts/sf_pro_display.dart';
-import 'package:resumate_flutter/core/spacers/spacers.dart';
-import 'package:resumate_flutter/core/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
+import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
+import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 
 class SignUpOptions extends StatelessWidget {
   final String text;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:readmore/readmore.dart';
-import 'package:resumate_flutter/core/fonts/sf_pro_display.dart';
-import 'package:resumate_flutter/core/spacers/spacers.dart';
-import 'package:resumate_flutter/core/theme/app_pallette.dart';
-import 'package:resumate_flutter/core/widgets/rounded_button.dart';
+import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
+import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
+import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
 
 class JobDetailsPage extends StatelessWidget {
   const JobDetailsPage({super.key});

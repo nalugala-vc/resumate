@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:resumate_flutter/core/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/features/feed/view/pages/homepage.dart';
 import 'package:resumate_flutter/features/feed/view/pages/roadmap.dart';
 

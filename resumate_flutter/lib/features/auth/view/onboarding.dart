@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:resumate_flutter/core/fonts/sf_pro_display.dart';
-import 'package:resumate_flutter/core/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
+import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

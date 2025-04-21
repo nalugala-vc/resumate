@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resumate_flutter/core/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 
 class AppTheme {
   static _border([Color color = AppPallete.primary400, double width = 3]) =>

@@ -1,13 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:resumate_flutter/core/fonts/sf_pro_display.dart';
-import 'package:resumate_flutter/core/spacers/spacers.dart';
-import 'package:resumate_flutter/core/theme/app_pallette.dart';
-import 'package:resumate_flutter/core/widgets/auth_field.dart';
-import 'package:resumate_flutter/core/widgets/rounded_button.dart';
+import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
+import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
+import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/widgets/auth_field.dart';
+import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
 import 'package:resumate_flutter/features/auth/view/widgets/sign_up_option.dart';
 import 'package:resumate_flutter/features/auth/view/widgets/social_icons.dart';
+import 'package:resumate_flutter/features/auth/viewmodel/auth_controller.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -17,8 +18,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final controller = Get.put(SignInController());
 
   final _formKey = GlobalKey<FormState>();
 
@@ -45,12 +45,12 @@ class _SignInState extends State<SignIn> {
                         ),
                         spaceH40,
                         AuthField(
-                          controller: emailController,
+                          controller: controller.email,
                           hintText: 'Email',
                         ),
                         spaceH40,
                         AuthField(
-                          controller: passwordController,
+                          controller: controller.password,
                           isObscureText: true,
 
                           hintText: 'Password',

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:resumate_flutter/core/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 
 class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({super.key});

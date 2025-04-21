@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:resumate_flutter/core/fonts/bumbbled.dart';
-import 'package:resumate_flutter/core/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/fonts/bumbbled.dart';
+import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
