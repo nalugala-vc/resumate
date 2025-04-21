@@ -8,15 +8,18 @@
   },
   "dependencies": {
     "actionhero": "29.3.4",
-    "ws": "latest",
     "ioredis": "latest",
     "ioredis-mock": "latest",
-    "winston": "latest"
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.13.2",
+    "winston": "latest",
+    "ws": "latest"
   },
   "devDependencies": {
-    "@types/node": "latest",
+    "@types/formidable": "^3.4.5",
     "@types/glob": "latest",
     "@types/jest": "latest",
+    "@types/node": "latest",
     "jest": "latest",
     "prettier": "latest",
     "ts-jest": "latest",
