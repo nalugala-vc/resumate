@@ -12,6 +12,7 @@
     "ioredis": "latest",
     "ioredis-mock": "latest",
     "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.10.1",
     "winston": "latest",
     "ws": "latest"
   },
@@ -23,6 +24,7 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/mongoose": "^5.11.96",
     "@types/node": "latest",
+    "@types/nodemailer": "^6.4.17",
     "jest": "latest",
     "prettier": "latest",
     "ts-jest": "latest",

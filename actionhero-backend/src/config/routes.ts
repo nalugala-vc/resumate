@@ -14,10 +14,12 @@ export const DEFAULT: { [namespace]: () => RoutesConfig } = {
       get: [
         { path: "/status", action: "status" },
         { path: "/swagger", action: "swagger" },
+        { path: '/verify-email', action: 'verify-email' },
         { path: "/createChatRoom", action: "createChatRoom" },
       ],
       post :[
         { path: '/signup', action: 'signup'},
+        { path: '/verify-otp', action: 'verifyOtp' },
         { path: '/signin', action: 'signin'},
       ]
 
