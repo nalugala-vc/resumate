@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "actionhero": "29.3.4",
+    "bcrypt": "^5.1.1",
     "ioredis": "latest",
     "ioredis-mock": "latest",
+    "jsonwebtoken": "^9.0.2",
     "winston": "latest",
     "ws": "latest"
   },
@@ -19,6 +21,7 @@
     "@types/glob": "latest",
     "@types/jest": "latest",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/mongoose": "^5.11.96",
     "@types/node": "latest",
     "jest": "latest",
     "prettier": "latest",
