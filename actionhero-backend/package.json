@@ -7,11 +7,9 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "@types/mongoose": "^5.11.96",
     "actionhero": "29.3.4",
     "ioredis": "latest",
     "ioredis-mock": "latest",
-    "mongoose": "^8.13.2",
     "winston": "latest",
     "ws": "latest"
   },
