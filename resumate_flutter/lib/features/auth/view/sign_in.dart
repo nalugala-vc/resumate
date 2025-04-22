@@ -6,6 +6,7 @@ import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/auth_field.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
+import 'package:resumate_flutter/features/auth/view/sign_up.dart';
 import 'package:resumate_flutter/features/auth/view/widgets/sign_up_option.dart';
 import 'package:resumate_flutter/features/auth/view/widgets/social_icons.dart';
 import 'package:resumate_flutter/features/auth/viewmodel/auth_controller.dart';
@@ -109,7 +110,7 @@ class _SignInState extends State<SignIn> {
                                   recognizer:
                                       TapGestureRecognizer()
                                         ..onTap = () {
-                                          Get.offAllNamed('/sign-in');
+                                          Get.to(() => SignUp());
                                         },
                                 ),
                               ],

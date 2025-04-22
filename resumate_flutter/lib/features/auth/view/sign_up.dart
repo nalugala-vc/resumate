@@ -6,6 +6,7 @@ import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/auth_field.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
+import 'package:resumate_flutter/features/auth/view/sign_in.dart';
 import 'package:resumate_flutter/features/auth/view/widgets/sign_up_option.dart';
 import 'package:resumate_flutter/features/auth/view/widgets/social_icons.dart';
 import 'package:resumate_flutter/features/auth/viewmodel/auth_controller.dart';
@@ -46,23 +47,41 @@ class _SignUpState extends State<SignUp> {
                         AuthField(
                           controller: controller.email,
                           hintText: 'Email',
+                          validator:
+                              (value) => controller.validateEmail(value ?? ''),
                         ),
                         spaceH40,
                         AuthField(
                           controller: controller.password,
                           isObscureText: true,
-
+                          validator:
+                              (value) =>
+                                  controller.validatePassword(value ?? ''),
                           hintText: 'Password',
                         ),
                         spaceH40,
                         AuthField(
                           controller: controller.confirmPassword,
                           isObscureText: true,
-
+                          validator:
+                              (value) => controller.validateConfirmPassword(
+                                controller.password.text,
+                                value ?? '',
+                              ),
                           hintText: 'Confirm Password',
                         ),
                         spaceH50,
-                        RoundedButton(label: 'Sign Up', onTap: () {}),
+                        RoundedButton(
+                          label: 'Sign Up',
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              controller.signUp(
+                                email: controller.email.text,
+                                password: controller.password.text,
+                              );
+                            }
+                          },
+                        ),
                         spaceH50,
                         const SignUpOptions(text: 'or sign up with'),
                         spaceH50,
@@ -114,7 +133,7 @@ class _SignUpState extends State<SignUp> {
                                   recognizer:
                                       TapGestureRecognizer()
                                         ..onTap = () {
-                                          Get.offAllNamed('/sign-in');
+                                          Get.to(() => SignIn());
                                         },
                                 ),
                               ],

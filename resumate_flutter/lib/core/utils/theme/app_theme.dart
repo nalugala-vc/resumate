@@ -20,6 +20,8 @@ class AppTheme {
       ),
       enabledBorder: _border(AppPallete.primary400, 1),
       focusedBorder: _border(),
+      errorBorder: _border(AppPallete.errorColor, 1),
+      focusedErrorBorder: _border(AppPallete.errorColor, 1),
     ),
     appBarTheme: const AppBarTheme(backgroundColor: AppPallete.whiteColor),
   );
