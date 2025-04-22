@@ -60,8 +60,6 @@ class _OTPState extends State<OTP> {
                   },
                 ),
                 spaceH50,
-                RoundedButton(label: 'Verify', onTap: () {}),
-                spaceH25,
                 RoundedButton(
                   label: 'Send again',
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,

@@ -20,7 +20,14 @@ class AuthField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(hintText: hintText),
       obscureText: isObscureText,
-      validator: validator,
+      validator:
+          validator ??
+          (value) {
+            if (value!.isEmpty) {
+              return '$hintText is missing';
+            }
+            return null;
+          },
     );
   }
 }

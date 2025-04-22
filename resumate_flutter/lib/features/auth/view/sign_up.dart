@@ -72,6 +72,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         spaceH50,
                         RoundedButton(
+                          isLoading: controller.isLoading.value,
                           label: 'Sign Up',
                           onTap: () {
                             if (_formKey.currentState!.validate()) {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resumate_flutter/core/controller/base_controller.dart';
+import 'package:resumate_flutter/core/utils/widgets/custom_nav_bar.dart';
+import 'package:resumate_flutter/features/auth/model/User.dart';
 import 'package:resumate_flutter/features/auth/repository/auth_repository.dart';
 import 'package:resumate_flutter/features/auth/view/otp.dart';
 import 'package:resumate_flutter/features/auth/view/sign_in.dart';
@@ -81,8 +83,48 @@ class SignUpController extends BaseController {
 class SignInController extends BaseController {
   static SignInController get instance => Get.find();
 
+  final AuthRepository _authRepo = AuthRepository();
+
+  final errorMessage = ''.obs;
+  final Rxn<UserModel> currentUser = Rxn<UserModel>(); // Reactive user state
+
   final email = TextEditingController();
   final password = TextEditingController();
+
+  UserModel? get user => currentUser.value; // Optional getter for user
+
+  Future<void> signIn({required String email, required String password}) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      setBusy(true);
+      errorMessage.value = '';
+
+      final res = await _authRepo.signIn(email: email, password: password);
+
+      res.fold(
+        (failure) {
+          print(failure.message);
+          Get.snackbar('Error', failure.message);
+        },
+        (user) async {
+          currentUser.value = user;
+
+          // Persist values for future sessions
+          await prefs.setString('USER_ID', user.id);
+          await prefs.setString('USER_EMAIL', user.email);
+          await prefs.setString('USER_TOKEN', user.token);
+
+          Get.snackbar('Success', 'Signed in successfully');
+          Get.to(() => CustomBottomNavBar());
+        },
+      );
+    } catch (e) {
+      errorMessage.value = e.toString();
+      Get.snackbar('Error', e.toString());
+    } finally {
+      setBusy(false);
+    }
+  }
 }
 
 class OTPController extends BaseController {
@@ -98,7 +140,6 @@ class OTPController extends BaseController {
 
     res.fold(
       (failure) {
-        print(failure.message);
         Get.snackbar('Error', failure.message);
       },
       (res) async {
