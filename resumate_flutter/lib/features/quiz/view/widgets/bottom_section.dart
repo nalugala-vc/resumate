@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/widgets/custom_nav_bar.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
 
 class BottomSection extends StatelessWidget {
-  const BottomSection({super.key});
-
-  final List<String> skills = const [
-    "HTML & CSS",
-    "JavaScript",
-    "Tailwind",
-    "TypeScript",
-    "Python",
-    "Django",
-  ];
+  final List<String> recommendations;
+  const BottomSection({super.key, required this.recommendations});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +26,7 @@ class BottomSection extends StatelessWidget {
           spacing: 12,
           runSpacing: 12,
           children:
-              skills
+              recommendations
                   .map(
                     (skill) => Container(
                       padding: EdgeInsets.symmetric(
@@ -57,7 +52,9 @@ class BottomSection extends StatelessWidget {
         Center(
           child: RoundedButton(
             label: 'Go to feed',
-            onTap: () {},
+            onTap: () {
+              Get.to(() => CustomBottomNavBar());
+            },
             height: 55,
             backgroundColor: AppPallete.pink400,
             fontsize: 15,

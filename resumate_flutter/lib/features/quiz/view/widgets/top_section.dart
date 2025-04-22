@@ -6,7 +6,28 @@ import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 
 class TopSection extends StatelessWidget {
-  const TopSection({super.key});
+  final Map<String, double> results;
+  final String topCategory;
+  final Map<String, String> categoryNames;
+  const TopSection({
+    super.key,
+    required this.results,
+    required this.topCategory,
+    required this.categoryNames,
+  });
+
+  String getTitleFromTrack(String track) {
+    switch (track) {
+      case 'ml':
+        return 'Machine Learning Engineer';
+      case 'frontend':
+        return 'Frontend Developer';
+      case 'backend':
+        return 'Backend Developer';
+      default:
+        return 'Unknown Track';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +35,7 @@ class TopSection extends StatelessWidget {
       children: [
         spaceH40,
         SfProDisplay(
-          text: "You’re best suited for",
+          text: "Your Results",
           fontSize: 20,
           fontWeight: FontWeight.normal,
 
@@ -50,7 +71,7 @@ class TopSection extends StatelessWidget {
                 ),
                 child: Center(
                   child: SfProDisplay(
-                    text: "75%",
+                    text: "${results[topCategory]!.toStringAsFixed(0)}%",
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                     textColor: Color(0xFFAD7373),
@@ -62,7 +83,7 @@ class TopSection extends StatelessWidget {
         ),
         spaceH30,
         SfProDisplay(
-          text: "FRONTED DEVELOPMENT",
+          text: getTitleFromTrack(topCategory),
           textColor: AppPallete.whiteColor,
           fontWeight: FontWeight.bold,
           fontSize: 20,

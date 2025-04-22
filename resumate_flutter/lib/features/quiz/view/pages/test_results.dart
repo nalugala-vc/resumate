@@ -5,36 +5,54 @@ import 'package:resumate_flutter/features/quiz/view/widgets/bottom_section.dart'
 import 'package:resumate_flutter/features/quiz/view/widgets/top_section.dart';
 
 class TestResultsPage extends StatelessWidget {
+  final Map<String, double> results;
+  final String topCategory;
+  final String level;
+  final List<String> recommendations;
+  final Map<String, String> categoryNames;
+
+  const TestResultsPage({
+    Key? key,
+    required this.results,
+    required this.topCategory,
+    required this.level,
+    required this.recommendations,
+    required this.categoryNames,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        extendBody: true,
-        backgroundColor: AppPallete.pink400,
-        body: SafeArea(
-          bottom: false,
-          child: Column(
-            children: [
-              spaceH20,
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.0),
-                child: TopSection(),
+    List<MapEntry<String, double>> sortedResults =
+        results.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+
+    return Scaffold(
+      extendBody: true,
+      backgroundColor: AppPallete.pink400,
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            spaceH20,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              child: TopSection(
+                results: results,
+                topCategory: topCategory,
+                categoryNames: categoryNames,
               ),
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(24),
-                    ),
-                  ),
-                  padding: const EdgeInsets.all(24),
-                  child: const BottomSection(),
+            ),
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                 ),
+                padding: const EdgeInsets.all(24),
+                child: BottomSection(recommendations: recommendations),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

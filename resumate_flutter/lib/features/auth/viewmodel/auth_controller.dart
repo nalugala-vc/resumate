@@ -6,6 +6,7 @@ import 'package:resumate_flutter/features/auth/model/User.dart';
 import 'package:resumate_flutter/features/auth/repository/auth_repository.dart';
 import 'package:resumate_flutter/features/auth/view/otp.dart';
 import 'package:resumate_flutter/features/auth/view/sign_in.dart';
+import 'package:resumate_flutter/features/quiz/view/pages/quiz_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpController extends BaseController {
@@ -115,7 +116,7 @@ class SignInController extends BaseController {
           await prefs.setString('USER_TOKEN', user.token);
 
           Get.snackbar('Success', 'Signed in successfully');
-          Get.to(() => CustomBottomNavBar());
+          Get.to(() => QuizPage());
         },
       );
     } catch (e) {
