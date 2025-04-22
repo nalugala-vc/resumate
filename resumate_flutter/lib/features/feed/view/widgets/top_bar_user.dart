@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 
 class TopBarUser extends StatelessWidget {
   final String name;
@@ -42,21 +42,7 @@ class TopBarUser extends StatelessWidget {
             ),
           ],
         ),
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.grey.shade300, width: 2),
-          ),
-          child: Center(
-            child: HeroIcon(
-              HeroIcons.bell,
-              style: HeroIconStyle.outline,
-              color: Colors.black,
-              size: 28,
-            ),
-          ),
-        ),
+        NotificationsIcon(),
       ],
     );
   }

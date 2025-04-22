@@ -6,6 +6,7 @@ class AppPallete {
   static const Color primary200 = Color(0xFFB6E2E2);
   static const Color pink400 = Color(0xFFFDB7B9);
   static const Color pink100 = Color(0xFFFFF8F8);
+  static const Color pink200 = Color(0xFFfededf);
   static const Color lightOrange400 = Color(0xFFEAB499);
   static const Color lightOrange100 = Color(0xFFFFE8DC);
   static const Color borderColor = Color.fromRGBO(52, 51, 67, 1);
