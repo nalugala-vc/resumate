@@ -10,6 +10,7 @@ class TestResultsPage extends StatelessWidget {
   final String level;
   final List<String> recommendations;
   final Map<String, String> categoryNames;
+  final Function(String) calculateCategoryMetrics;
 
   const TestResultsPage({
     Key? key,
@@ -18,6 +19,7 @@ class TestResultsPage extends StatelessWidget {
     required this.level,
     required this.recommendations,
     required this.categoryNames,
+    required this.calculateCategoryMetrics,
   }) : super(key: key);
 
   @override

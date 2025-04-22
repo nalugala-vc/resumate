@@ -4,6 +4,7 @@ import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
+import 'package:resumate_flutter/features/quiz/model/category_metric.dart';
 import 'package:resumate_flutter/features/quiz/model/question.dart';
 import 'package:resumate_flutter/features/quiz/model/skills_category.dart';
 import 'package:resumate_flutter/features/quiz/view/pages/test_results.dart';
@@ -16,6 +17,51 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   int currentIndex = 0;
   Map<int, int> selectedAnswers = {};
+
+  List<CategoryMetric> calculateCategoryMetrics(String category) {
+    // Define which questions correspond to which metrics
+
+    List<CategoryMetric> metrics = [];
+
+    // Calculate each metric score
+    metricQuestionMap[category]?.forEach((metricName, questionIndices) {
+      double totalScore = 0;
+      double maxPossibleScore = 0;
+
+      for (int questionIndex in questionIndices) {
+        if (questionIndex < questions.length &&
+            selectedAnswers.containsKey(questionIndex)) {
+          int answerIndex = selectedAnswers[questionIndex]!;
+
+          // Add the score for this question
+          if (questions[questionIndex].categoryScores.containsKey(category)) {
+            double score =
+                questions[questionIndex].categoryScores[category]![answerIndex];
+            totalScore += score;
+
+            // Calculate max possible score for this question
+            double maxScore = questions[questionIndex].categoryScores[category]!
+                .reduce((max, value) => value > max ? value : max);
+            maxPossibleScore += maxScore;
+          }
+        }
+      }
+
+      // Calculate percentage
+      double percentage = (totalScore / maxPossibleScore) * 100;
+
+      // Add the metric
+      metrics.add(
+        CategoryMetric(
+          name: metricName,
+          score: percentage,
+          description: metricDescriptions[category]?[metricName] ?? "",
+        ),
+      );
+    });
+
+    return metrics;
+  }
 
   void selectAnswer(int index) {
     setState(() {
@@ -133,6 +179,7 @@ class _QuizPageState extends State<QuizPage> {
               categoryNames: skillCategories.map(
                 (key, value) => MapEntry(key, value.name),
               ),
+              calculateCategoryMetrics: calculateCategoryMetrics,
             ),
       ),
     );
@@ -285,12 +332,14 @@ class _QuizPageState extends State<QuizPage> {
   }
 }
 
+// Update your ResultsPage class
 class ResultsPage extends StatelessWidget {
   final Map<String, double> results;
   final String topCategory;
   final String level;
   final List<String> recommendations;
   final Map<String, String> categoryNames;
+  final Function(String) calculateCategoryMetrics;
 
   const ResultsPage({
     Key? key,
@@ -299,6 +348,7 @@ class ResultsPage extends StatelessWidget {
     required this.level,
     required this.recommendations,
     required this.categoryNames,
+    required this.calculateCategoryMetrics,
   }) : super(key: key);
 
   @override
@@ -424,6 +474,156 @@ class ResultsPage extends StatelessWidget {
 
             SizedBox(height: 30),
 
+            // Detailed Skills Breakdown Section
+            Text(
+              "Skills Breakdown",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+
+            // Create tabs for each category
+            DefaultTabController(
+              length: results.length,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TabBar(
+                    isScrollable: true,
+                    labelColor: AppPallete.pink400,
+                    unselectedLabelColor: Colors.grey,
+                    indicatorColor: AppPallete.pink400,
+                    tabs:
+                        sortedResults
+                            .map((entry) => Tab(text: categoryNames[entry.key]))
+                            .toList(),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    height: 300,
+                    child: TabBarView(
+                      children:
+                          sortedResults.map((entry) {
+                            // Get metrics for this category
+                            List<CategoryMetric> metrics =
+                                calculateCategoryMetrics(entry.key);
+
+                            return ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: metrics.length,
+                              itemBuilder: (context, index) {
+                                final metric = metrics[index];
+                                return Container(
+                                  margin: EdgeInsets.only(bottom: 20),
+                                  padding: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.shade200,
+                                        blurRadius: 5,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            metric.name,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 10,
+                                              vertical: 4,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: _getScoreColor(
+                                                metric.score,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: Text(
+                                              "${metric.score.toStringAsFixed(0)}%",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        metric.description,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey.shade700,
+                                        ),
+                                      ),
+                                      SizedBox(height: 12),
+                                      Stack(
+                                        children: [
+                                          Container(
+                                            height: 8,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Colors.grey.shade200,
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 8,
+                                            width:
+                                                (metric.score / 100) *
+                                                (MediaQuery.of(
+                                                      context,
+                                                    ).size.width -
+                                                    80),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: _getScoreColor(
+                                                metric.score,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10),
+                                      Text(
+                                        _getScoreLabel(metric.score),
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontStyle: FontStyle.italic,
+                                          color: _getScoreColor(metric.score),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 30),
+
             Text(
               "Skills to Focus On",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -500,6 +700,30 @@ class ResultsPage extends StatelessWidget {
         return Colors.purple;
       default:
         return AppPallete.pink400;
+    }
+  }
+
+  Color _getScoreColor(double score) {
+    if (score >= 80) {
+      return Colors.green;
+    } else if (score >= 60) {
+      return Colors.orange;
+    } else if (score >= 40) {
+      return Colors.amber;
+    } else {
+      return Colors.red;
+    }
+  }
+
+  String _getScoreLabel(double score) {
+    if (score >= 80) {
+      return "Excellent";
+    } else if (score >= 60) {
+      return "Good";
+    } else if (score >= 40) {
+      return "Developing";
+    } else {
+      return "Needs Improvement";
     }
   }
 }
