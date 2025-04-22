@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resumate_flutter/core/controller/base_controller.dart';
-import 'package:resumate_flutter/core/utils/widgets/custom_nav_bar.dart';
 import 'package:resumate_flutter/features/auth/repository/auth_repository.dart';
+import 'package:resumate_flutter/features/auth/view/otp.dart';
+import 'package:resumate_flutter/features/auth/view/sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpController extends BaseController {
   static SignUpController get instance => Get.find();
@@ -14,7 +16,6 @@ class SignUpController extends BaseController {
 
   final errorMessage = ''.obs;
 
-  // Validation method for password
   String? validatePassword(String password) {
     if (password.length < 6) {
       return 'Password must be at least 6 characters long';
@@ -50,7 +51,8 @@ class SignUpController extends BaseController {
 
   Future<void> signUp({required String email, required String password}) async {
     try {
-      isLoading.value = true;
+      final prefs = await SharedPreferences.getInstance();
+      setBusy(true);
       errorMessage.value = '';
 
       final res = await _authRepo.signup(email: email, password: password);
@@ -60,16 +62,18 @@ class SignUpController extends BaseController {
           print(failure.message);
           Get.snackbar('Error', failure.message);
         },
-        (successMessage) {
+        (successMessage) async {
           Get.snackbar('Success', successMessage);
-          Get.to(() => CustomBottomNavBar());
+          await prefs.setString('USER_EMAIL', email);
+          Get.to(() => OTP());
         },
       );
+      setBusy(false);
     } catch (e) {
       errorMessage.value = e.toString();
       Get.snackbar('Error', e.toString());
     } finally {
-      isLoading.value = false;
+      setBusy(false);
     }
   }
 }
@@ -79,4 +83,29 @@ class SignInController extends BaseController {
 
   final email = TextEditingController();
   final password = TextEditingController();
+}
+
+class OTPController extends BaseController {
+  static OTPController get instance => Get.find();
+  final AuthRepository _authRepo = AuthRepository();
+
+  Future<void> verifyOTP({required String OTPcode}) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    String? userEmail = prefs.getString('USER_EMAIL');
+
+    final res = await _authRepo.verifyOTP(email: userEmail!, OTPCode: OTPcode);
+
+    res.fold(
+      (failure) {
+        print(failure.message);
+        Get.snackbar('Error', failure.message);
+      },
+      (res) async {
+        Get.snackbar('Success', 'Account Verified Successfully');
+        Get.to(() => SignIn());
+      },
+    );
+    setBusy(false);
+  }
 }

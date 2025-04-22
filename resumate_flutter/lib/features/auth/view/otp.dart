@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
+import 'package:resumate_flutter/features/auth/viewmodel/auth_controller.dart';
 
 class OTP extends StatefulWidget {
   const OTP({super.key});
@@ -13,8 +15,9 @@ class OTP extends StatefulWidget {
 }
 
 class _OTPState extends State<OTP> {
+  final controller = Get.put(OTPController());
   var otp;
-  @override
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,10 +45,10 @@ class _OTPState extends State<OTP> {
                 ),
                 spaceH50,
                 OtpTextField(
-                  numberOfFields: 4,
+                  numberOfFields: 6,
                   enabledBorderColor: AppPallete.primary200,
-                  fieldWidth: 60,
-                  fieldHeight: 60,
+                  fieldWidth: 50,
+                  fieldHeight: 50,
                   focusedBorderColor: AppPallete.primary400,
                   borderColor: AppPallete.primary400,
                   showFieldAsBox: true,
@@ -53,15 +56,7 @@ class _OTPState extends State<OTP> {
                     otp = code;
                   },
                   onSubmit: (String verificationCode) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text("Verification Code"),
-                          content: Text('Code entered is $verificationCode'),
-                        );
-                      },
-                    );
+                    controller.verifyOTP(OTPcode: verificationCode);
                   },
                 ),
                 spaceH50,

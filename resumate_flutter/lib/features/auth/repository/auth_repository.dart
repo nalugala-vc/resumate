@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:fpdart/fpdart.dart';
 import 'package:resumate_flutter/core/api/config.dart';
 import 'package:resumate_flutter/core/api/endpoints.dart';
@@ -22,8 +21,6 @@ class AuthRepository {
       );
 
       final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
-      print(resBodyMap);
-      print(response.statusCode);
 
       if (response.statusCode != 200) {
         final message = resBodyMap['message'] ?? 'Something went wrong';
@@ -31,6 +28,33 @@ class AuthRepository {
       }
 
       return Right(resBodyMap['message'] ?? 'Registration successful');
+    } catch (e) {
+      return Left(AppFailure(e.toString()));
+    }
+  }
+
+  Future<Either<AppFailure, bool>> verifyOTP({
+    required String OTPCode,
+    required String email,
+  }) async {
+    final headers = await AppConfigs.authorizedHeaders();
+    final body = jsonEncode({"email": email, "otpCode": OTPCode});
+
+    try {
+      final response = await http.post(
+        Uri.parse(AppConfigs.appBaseUrl + Endpoints.verifyOTP),
+        headers: headers,
+        body: body,
+      );
+
+      final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (response.statusCode != 200) {
+        final message = resBodyMap['message'] ?? 'Something went wrong';
+        return Left(AppFailure(message));
+      }
+
+      return Right(true);
     } catch (e) {
       return Left(AppFailure(e.toString()));
     }
