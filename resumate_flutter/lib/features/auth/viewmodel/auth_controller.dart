@@ -122,6 +122,7 @@ class SignInController extends BaseController {
           await prefs.setString('USER_ID', user.id);
           await prefs.setString('USER_EMAIL', user.email);
           await prefs.setString('USER_TOKEN', user.token);
+          await prefs.setString('USER_NAME', user.name);
 
           Get.snackbar('Success', 'Signed in successfully');
           Get.to(() => QuizPage());
@@ -132,6 +133,23 @@ class SignInController extends BaseController {
       Get.snackbar('Error', e.toString());
     } finally {
       setBusy(false);
+    }
+  }
+
+  Future<void> loadUserFromStorage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final id = prefs.getString('USER_ID');
+    final email = prefs.getString('USER_EMAIL');
+    final token = prefs.getString('USER_TOKEN');
+    final name = prefs.getString('USER_NAME');
+
+    if (id != null && email != null && token != null && name != null) {
+      currentUser.value = UserModel(
+        id: id,
+        email: email,
+        token: token,
+        name: name,
+      );
     }
   }
 }

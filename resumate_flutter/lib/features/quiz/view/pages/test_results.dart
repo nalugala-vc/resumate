@@ -24,9 +24,6 @@ class TestResultsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<MapEntry<String, double>> sortedResults =
-        results.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
-
     return Scaffold(
       extendBody: true,
       backgroundColor: AppPallete.pink400,

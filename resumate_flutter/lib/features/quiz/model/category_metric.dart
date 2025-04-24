@@ -8,6 +8,11 @@ class CategoryMetric {
     required this.score,
     required this.description,
   });
+
+  @override
+  String toString() {
+    return 'CategoryMetric(name: $name, score: $score,description : $description)';
+  }
 }
 
 Map<String, Map<String, List<int>>> metricQuestionMap = {
