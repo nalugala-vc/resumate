@@ -4,6 +4,8 @@ import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 
 class ReadinessIndicator extends StatefulWidget {
+  const ReadinessIndicator({super.key});
+
   @override
   _ReadinessIndicatorState createState() => _ReadinessIndicatorState();
 }

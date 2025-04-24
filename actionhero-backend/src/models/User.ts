@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 export interface IUser extends Document {
   email: string;
   password: string;
+  name: string;
   isEmailVerified: boolean;
   otpCode?: string;
   otpExpiresAt?: Date;
@@ -13,9 +14,10 @@ export interface IUser extends Document {
 const UserSchema: Schema<IUser> = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  name: { type: String, required: true },
   isEmailVerified: { type: Boolean, default: false },
-  otpCode: { type: String }, // ✅ NEW
-  otpExpiresAt: { type: Date }, // ✅ NEW
+  otpCode: { type: String }, 
+  otpExpiresAt: { type: Date }, 
 });
 
 // Hash password before saving if it's new/modified

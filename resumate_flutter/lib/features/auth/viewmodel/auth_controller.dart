@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resumate_flutter/core/controller/base_controller.dart';
-import 'package:resumate_flutter/core/utils/widgets/custom_nav_bar.dart';
 import 'package:resumate_flutter/features/auth/model/User.dart';
 import 'package:resumate_flutter/features/auth/repository/auth_repository.dart';
 import 'package:resumate_flutter/features/auth/view/otp.dart';
@@ -13,6 +12,7 @@ class SignUpController extends BaseController {
   static SignUpController get instance => Get.find();
   final AuthRepository _authRepo = AuthRepository();
 
+  final name = TextEditingController();
   final email = TextEditingController();
   final password = TextEditingController();
   final confirmPassword = TextEditingController();
@@ -52,13 +52,21 @@ class SignUpController extends BaseController {
     return null;
   }
 
-  Future<void> signUp({required String email, required String password}) async {
+  Future<void> signUp({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       setBusy(true);
       errorMessage.value = '';
 
-      final res = await _authRepo.signup(email: email, password: password);
+      final res = await _authRepo.signup(
+        email: email,
+        password: password,
+        name: name,
+      );
 
       res.fold(
         (failure) {
@@ -92,7 +100,7 @@ class SignInController extends BaseController {
   final email = TextEditingController();
   final password = TextEditingController();
 
-  UserModel? get user => currentUser.value; // Optional getter for user
+  UserModel? get user => currentUser.value;
 
   Future<void> signIn({required String email, required String password}) async {
     try {

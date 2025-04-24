@@ -36,11 +36,12 @@ export class Signup extends Action {
       this.inputs = {
         email: { required: true },
         password: { required: true },
+        name: { required: true },
       };
     }
   
     async run(data: ActionProcessor<Signup>) {
-      const { email, password } = data.params;
+      const { email, password,name } = data.params;
   
       // Check if the email already exists
       const existing = await User.findOne({ email });
@@ -49,7 +50,7 @@ export class Signup extends Action {
       const otpCode = generateOTP();
       const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
   
-      const user = new User({ email, password, otpCode, otpExpiresAt });
+      const user = new User({ email, password, name,otpCode, otpExpiresAt ,});
       await user.save();
   
       try {
@@ -81,21 +82,27 @@ export class Signin extends Action {
 
   async run(data: ActionProcessor<Signin>) {
     const { params, response } = data;
-
     const { email, password } = params;
-
+  
     const user = await User.findOne({ email });
     if (!user || !(await user.comparePassword(password))) {
       throw new Error('Invalid credentials');
     }
-
+  
     const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
       expiresIn: '1d',
     });
-
+  
     response.success = true;
     response.token = token;
+    response.user = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      isEmailVerified: user.isEmailVerified,
+    };
   }
+  
 }
 
 export class VerifyOtp extends Action {

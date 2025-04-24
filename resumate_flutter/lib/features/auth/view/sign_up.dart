@@ -45,6 +45,11 @@ class _SignUpState extends State<SignUp> {
                         ),
                         spaceH40,
                         AuthField(
+                          controller: controller.name,
+                          hintText: 'Name',
+                        ),
+                        spaceH40,
+                        AuthField(
                           controller: controller.email,
                           hintText: 'Email',
                           validator:
@@ -79,6 +84,7 @@ class _SignUpState extends State<SignUp> {
                               controller.signUp(
                                 email: controller.email.text,
                                 password: controller.password.text,
+                                name: controller.name.text,
                               );
                             }
                           },

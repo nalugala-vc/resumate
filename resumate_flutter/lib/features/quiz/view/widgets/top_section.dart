@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:resumate_flutter/core/utils/constants.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
@@ -15,19 +16,6 @@ class TopSection extends StatelessWidget {
     required this.topCategory,
     required this.categoryNames,
   });
-
-  String getTitleFromTrack(String track) {
-    switch (track) {
-      case 'ml':
-        return 'Machine Learning Engineer';
-      case 'frontend':
-        return 'Frontend Developer';
-      case 'backend':
-        return 'Backend Developer';
-      default:
-        return 'Unknown Track';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

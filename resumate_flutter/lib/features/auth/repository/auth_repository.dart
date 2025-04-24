@@ -10,9 +10,14 @@ class AuthRepository {
   Future<Either<AppFailure, String>> signup({
     required String email,
     required String password,
+    required String name,
   }) async {
     final headers = await AppConfigs.authorizedHeaders();
-    final body = jsonEncode({"email": email, "password": password});
+    final body = jsonEncode({
+      "email": email,
+      "password": password,
+      "name": name,
+    });
 
     try {
       final response = await http.post(
@@ -51,19 +56,22 @@ class AuthRepository {
       final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
 
       if (response.statusCode != 200 || resBodyMap['success'] != true) {
-        final message = resBodyMap['message'] ?? 'Something went wrong';
+        final message = resBodyMap['error'] ?? 'Something went wrong';
         return Left(AppFailure(message));
       }
 
       final token = resBodyMap['token'] as String;
-      final requesterInfo =
-          resBodyMap['requesterInformation'] as Map<String, dynamic>;
-      final id = requesterInfo['id'] as String;
-      final receivedParams =
-          requesterInfo['receivedParams'] as Map<String, dynamic>;
-      final userEmail = receivedParams['email'] as String;
+      final userInfo = resBodyMap['user'] as Map<String, dynamic>;
+      final id = userInfo['id'] as String;
+      final userEmail = userInfo['email'] as String;
+      final userName = userInfo['name'] as String;
 
-      final userModel = UserModel(id: id, email: userEmail, token: token);
+      final userModel = UserModel(
+        id: id,
+        email: userEmail,
+        token: token,
+        name: userName,
+      );
 
       return Right(userModel);
     } catch (e) {

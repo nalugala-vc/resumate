@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
@@ -8,6 +10,7 @@ import 'package:resumate_flutter/features/quiz/model/category_metric.dart';
 import 'package:resumate_flutter/features/quiz/model/question.dart';
 import 'package:resumate_flutter/features/quiz/model/skills_category.dart';
 import 'package:resumate_flutter/features/quiz/view/pages/test_results.dart';
+import 'package:resumate_flutter/features/quiz/viewmodel/results_controller.dart';
 
 class QuizPage extends StatefulWidget {
   @override
@@ -167,6 +170,17 @@ class _QuizPageState extends State<QuizPage> {
 
     String level = determineLevel(results[topCategory]!);
     List<String> recommendations = getSkillRecommendations(topCategory, level);
+
+    final resultsController = Get.put(ResultsController());
+
+    resultsController.setResultsData(
+      resultsData: results,
+      topCat: topCategory,
+      levelData: level,
+      recs: recommendations,
+      catNames: skillCategories.map((key, value) => MapEntry(key, value.name)),
+      calcFunc: calculateCategoryMetrics,
+    );
 
     Navigator.of(context).push(
       MaterialPageRoute(

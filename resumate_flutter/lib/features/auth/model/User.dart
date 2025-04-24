@@ -4,10 +4,15 @@ import 'dart:convert';
 class UserModel {
   final String id;
   final String email;
-
+  final String name;
   final String token;
 
-  UserModel({required this.id, required this.email, required this.token});
+  UserModel({
+    required this.id,
+    required this.email,
+    required this.token,
+    required this.name,
+  });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{'id': id, 'email': email, 'token': token};
@@ -17,7 +22,7 @@ class UserModel {
     return UserModel(
       id: map['id'] as String,
       email: map['email'] as String,
-
+      name: map['name'] as String,
       token: map['token'] as String,
     );
   }
@@ -27,10 +32,11 @@ class UserModel {
   factory UserModel.fromJson(String source) =>
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  UserModel copyWith({String? id, String? email, String? token}) {
+  UserModel copyWith({String? id, String? email, String? token, String? name}) {
     return UserModel(
       id: id ?? this.id,
       email: email ?? this.email,
+      name: name ?? this.name,
       token: token ?? this.token,
     );
   }

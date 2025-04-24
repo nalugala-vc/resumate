@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.lightMode,
-      home: QuizPage(),
+      home: SignIn(),
     );
   }
 }
