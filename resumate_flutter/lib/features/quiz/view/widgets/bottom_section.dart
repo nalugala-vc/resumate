@@ -6,7 +6,6 @@ import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/custom_nav_bar.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
-import 'package:resumate_flutter/features/feed/view/pages/homepage.dart';
 
 class BottomSection extends StatelessWidget {
   final List<String> recommendations;
@@ -54,7 +53,7 @@ class BottomSection extends StatelessWidget {
           child: RoundedButton(
             label: 'Go to feed',
             onTap: () {
-              Get.to(() => Homepage());
+              Get.to(() => CustomBottomNavBar());
             },
             height: 55,
             backgroundColor: AppPallete.pink400,
