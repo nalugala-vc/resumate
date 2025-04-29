@@ -14,20 +14,84 @@ export class UploadResume extends Action {
     this.inputs = {
       resume_text: { required: true },
     };
-    this.outputExample = {
+    this.outputExample = this.outputExample = {
       overall_score: 75,
       structure: 78,
       language_clarity: 72,
       impact: 80,
       ats_compatibility: 69,
       details: {
-
-        structure: "The structure is clear, but the sections need better headers.",
-        language_clarity: "The language is mostly clear but could be more concise.",
-        impact: "The impact of experience is highlighted well but lacks measurable outcomes.",
-        ats_compatibility: "ATS compatibility is moderate due to lack of standard keywords.",
-      },
+        structure: {
+          description: "The resume is well-structured and easy to follow, with clear headings and formatting. However, the summary could be more impactful.",
+          recommendations: [
+            {
+              title: "Enhance the Summary Section",
+              description: "Highlight top achievements and skills in depth to make the summary stand out."
+            },
+            {
+              title: "Improve Formatting Consistency",
+              description: "Ensure consistent use of bullet points, fonts, and spacing across all sections."
+            },
+            {
+              title: "Use Clear Section Headings",
+              description: "Ensure section headings like 'Experience' and 'Education' are bold and stand out for easy scanning."
+            }
+          ]
+        },
+        language_clarity: {
+          description: "The language is mostly clear but could be more concise in some areas.",
+          recommendations: [
+            {
+              title: "Simplify Complex Sentences",
+              description: "Break down long sentences into simpler, more direct statements."
+            },
+            {
+              title: "Avoid Repetition",
+              description: "Eliminate repeated phrases and words to improve clarity."
+            },
+            {
+              title: "Use Action Verbs",
+              description: "Start bullet points with strong action verbs to make achievements more compelling."
+            }
+          ]
+        },
+        impact: {
+          description: "The impact of experience is strong, but measurable results and metrics are missing.",
+          recommendations: [
+            {
+              title: "Quantify Achievements",
+              description: "Add numbers or percentages to show the impact of your work, such as 'increased sales by 20%'."
+            },
+            {
+              title: "Focus on Key Achievements",
+              description: "Highlight the most important achievements from each role, emphasizing your impact."
+            },
+            {
+              title: "Use Strong Action Words",
+              description: "Start bullet points with verbs like 'led', 'managed', or 'increased' to make your impact clearer."
+            }
+          ]
+        },
+        ats_compatibility: {
+          description: "ATS compatibility is moderate due to lack of standard keywords.",
+          recommendations: [
+            {
+              title: "Include Industry Keywords",
+              description: "Incorporate relevant keywords from job descriptions to improve your chances with ATS systems."
+            },
+            {
+              title: "Use Standard Job Titles",
+              description: "Avoid using uncommon job titles that may not be recognized by ATS. Use industry-standard titles."
+            },
+            {
+              title: "Optimize Resume Formatting",
+              description: "Use standard resume formatting to ensure your resume is parsed correctly by ATS systems."
+            }
+          ]
+        }
+      }
     };
+    ;
   }
 
   async run(data: { connection: any; response: any }) {
@@ -39,11 +103,15 @@ export class UploadResume extends Action {
         throw new Error("No resume text provided.");
       }
 
-      // Modify the prompt to request a breakdown with details
+      // Modify the prompt to request detailed feedback and improvement steps
       const prompt = `
 Analyze this resume and rate it out of 100 for job market optimization.
 Provide ratings for: Structure, Language/Clarity, Impact of Experience, and ATS Compatibility.
-Also, provide detailed feedback for each category, explaining why the resume received this score and areas for improvement.
+For each category, provide:
+1. A description of why the resume received the score for that category.
+2. At least 3 detailed, actionable recommendations with a title and description for improvement.
+
+PLEASE NOTE THAT OVERALL SCORE IS CALCULATED BY ADDING ALL THE 4 CATEGORIES AND DIVIDING BY 4.
 
 Resume text:
 ${resume_text.substring(0, 4000)} ${resume_text.length > 4000 ? "... (truncated)" : ""}
@@ -56,10 +124,74 @@ Return ONLY valid JSON in this format:
   "impact": number,
   "ats_compatibility": number,
   "details": {
-    "structure": string,
-    "language_clarity": string,
-    "impact": string,
-    "ats_compatibility": string
+    "structure": {
+      "description": string,
+      "recommendations": [
+        {
+          "title": string,
+          "description": string
+        },
+        {
+          "title": string,
+          "description": string
+        },
+        {
+          "title": string,
+          "description": string
+        }
+      ]
+    },
+    "language_clarity": {
+      "description": string,
+      "recommendations": [
+        {
+          "title": string,
+          "description": string
+        },
+        {
+          "title": string,
+          "description": string
+        },
+        {
+          "title": string,
+          "description": string
+        }
+      ]
+    },
+    "impact": {
+      "description": string,
+      "recommendations": [
+        {
+          "title": string,
+          "description": string
+        },
+        {
+          "title": string,
+          "description": string
+        },
+        {
+          "title": string,
+          "description": string
+        }
+      ]
+    },
+    "ats_compatibility": {
+      "description": string,
+      "recommendations": [
+        {
+          "title": string,
+          "description": string
+        },
+        {
+          "title": string,
+          "description": string
+        },
+        {
+          "title": string,
+          "description": string
+        }
+      ]
+    }
   }
 }
       `;
@@ -81,7 +213,7 @@ Return ONLY valid JSON in this format:
       console.timeEnd("cohere-request");
 
       const rawText = completion.text ?? "";
-      console.log("Raw Cohere response:", rawText);
+      console.log("Raw Cohere response:", rawText.substring(0, 100) + "...");
 
       try {
         // Check if the response is a valid JSON string
