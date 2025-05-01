@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/features/mentorship/model/Mentor.dart';
+import 'package:resumate_flutter/features/mentorship/view/pages/mentor_about_page.dart';
 
 class MentorCard extends StatelessWidget {
   final Mentor mentor;
@@ -10,7 +12,9 @@ class MentorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Get.to(() => MentorAboutPage(mentor: mentor));
+      },
       child: Stack(
         children: [
           Container(

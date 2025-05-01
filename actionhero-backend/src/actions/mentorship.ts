@@ -2,28 +2,43 @@ import { Action, ActionProcessor } from 'actionhero';
 import { Mentor } from '../models/Mentor';
 
 export class AddMentor extends Action {
-  constructor() {
-    super();
-    this.name = 'addMentor';
-    this.description = 'Add a new mentor';
-    this.inputs = {
-      image: { required: true },
-      name: { required: true },
-      company: { required: true },
-      jobRole: { required: true },
-      about: { required: true },
-      skills: { required: true }, 
-    };
+    constructor() {
+      super();
+      this.name = 'addMentor';
+      this.description = 'Add a new mentor';
+      this.inputs = {
+        image: { required: true },
+        name: { required: true },
+        company: { required: true },
+        jobRole: { required: true },
+        about: { required: true },
+        skills: {
+            required: true,
+            formatter: (param: string) => {
+              // If already an array, return as-is
+              if (Array.isArray(param)) return param;
+              // If it's a comma-separated string (just in case), split it
+              if (typeof param === 'string') return param.split(',').map((s) => s.trim());
+              // Fallback to empty array
+              return [];
+            },
+            validator: (param: string | any[]) => Array.isArray(param) && param.length > 0,
+          },
+          
+      };
+    }
+  
+    async run(data: ActionProcessor<AddMentor>) {
+      const { image, name, jobRole, about, skills, company } = data.params;
+      console.log('Received skills:', skills); 
+      
+      const mentor = new Mentor({ image, name, jobRole, about, skills, company });
+      await mentor.save();
+      
+      data.response.success = true;
+      data.response.mentor = mentor;
+    }
   }
-
-  async run(data: ActionProcessor<AddMentor>) {
-    const { image, name, jobRole, about, skills ,company} = data.params;
-    const mentor = new Mentor({ image, name, jobRole, about, skills ,company});
-    await mentor.save();
-    data.response.success = true;
-    data.response.mentor = mentor;
-  }
-}
 
 export class FetchMentors extends Action {
     constructor() {
