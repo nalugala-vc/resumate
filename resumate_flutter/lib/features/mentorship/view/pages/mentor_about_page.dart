@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
 import 'package:resumate_flutter/features/mentorship/model/Mentor.dart';
 import 'package:resumate_flutter/features/mentorship/view/widgets/skill_chip.dart';
+import 'package:resumate_flutter/features/mentorship/viewmodel/mentorship_controller.dart';
+import 'package:intl/intl.dart';
 
 class MentorAboutPage extends StatelessWidget {
   final Mentor mentor;
@@ -12,6 +16,8 @@ class MentorAboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<MentorshipController>();
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8F8),
       body: Column(
@@ -127,7 +133,61 @@ class MentorAboutPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: RoundedButton(
               label: 'Book Session',
-              onTap: () {},
+              onTap: () async {
+                final ThemeData pickerTheme = Theme.of(context).copyWith(
+                  colorScheme: ColorScheme.light(
+                    primary: AppPallete.pink400,
+                    onPrimary: Colors.white,
+                  ),
+                  dialogBackgroundColor: Colors.white,
+                  textButtonTheme: TextButtonThemeData(
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppPallete.pink400, // Button text color
+                    ),
+                  ),
+                );
+
+                final DateTime? selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(2100),
+                  builder: (context, child) {
+                    return Theme(data: pickerTheme, child: child!);
+                  },
+                );
+
+                if (selectedDate != null) {
+                  final TimeOfDay? selectedTime = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.now(),
+                    builder: (context, child) {
+                      return Theme(data: pickerTheme, child: child!);
+                    },
+                  );
+
+                  if (selectedTime != null) {
+                    final DateTime finalDateTime = DateTime(
+                      selectedDate.year,
+                      selectedDate.month,
+                      selectedDate.day,
+                      selectedTime.hour,
+                      selectedTime.minute,
+                    );
+
+                    final dateStr = DateFormat(
+                      'yyyy-MM-dd',
+                    ).format(finalDateTime);
+                    final timeStr = DateFormat('HH:mm').format(finalDateTime);
+
+                    await controller.bookMentorSession(
+                      mentorId: mentor.id,
+                      date: dateStr,
+                      time: timeStr,
+                    );
+                  }
+                }
+              },
               borderColor: AppPallete.pink400,
               backgroundColor: AppPallete.pink400,
             ),

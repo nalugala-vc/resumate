@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 
 class Mentor {
+  final String id;
   final String image;
   final String name;
   final String jobRole;
@@ -12,6 +13,7 @@ class Mentor {
   final List<String> skills;
 
   Mentor({
+    required this.id,
     required this.image,
     required this.name,
     required this.jobRole,
@@ -21,6 +23,7 @@ class Mentor {
   });
 
   Mentor copyWith({
+    String? id,
     String? image,
     String? name,
     String? jobRole,
@@ -29,6 +32,7 @@ class Mentor {
     List<String>? skills,
   }) {
     return Mentor(
+      id: id ?? this.id,
       image: image ?? this.image,
       name: name ?? this.name,
       jobRole: jobRole ?? this.jobRole,
@@ -40,6 +44,7 @@ class Mentor {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'image': image,
       'name': name,
       'jobRole': jobRole,
@@ -51,6 +56,7 @@ class Mentor {
 
   factory Mentor.fromMap(Map<String, dynamic> map) {
     return Mentor(
+      id: map['_id'] as String,
       image: map['image'] as String,
       name: map['name'] as String,
       jobRole: map['jobRole'] as String,
@@ -67,7 +73,7 @@ class Mentor {
 
   @override
   String toString() {
-    return 'Mentor(image: $image, name: $name, jobRole: $jobRole, company: $company, about: $about, skills: $skills)';
+    return 'Mentor(id: $id, image: $image, name: $name, jobRole: $jobRole, company: $company, about: $about, skills: $skills)';
   }
 
   @override
@@ -75,7 +81,8 @@ class Mentor {
     if (identical(this, other)) return true;
     final listEquals = const DeepCollectionEquality().equals;
 
-    return other.image == image &&
+    return other.id == id &&
+        other.image == image &&
         other.name == name &&
         other.jobRole == jobRole &&
         other.company == company &&
@@ -85,7 +92,8 @@ class Mentor {
 
   @override
   int get hashCode {
-    return image.hashCode ^
+    return id.hashCode ^
+        image.hashCode ^
         name.hashCode ^
         jobRole.hashCode ^
         company.hashCode ^

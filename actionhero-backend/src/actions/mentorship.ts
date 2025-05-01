@@ -15,11 +15,11 @@ export class AddMentor extends Action {
         skills: {
             required: true,
             formatter: (param: string) => {
-              // If already an array, return as-is
+
               if (Array.isArray(param)) return param;
-              // If it's a comma-separated string (just in case), split it
+
               if (typeof param === 'string') return param.split(',').map((s) => s.trim());
-              // Fallback to empty array
+           
               return [];
             },
             validator: (param: string | any[]) => Array.isArray(param) && param.length > 0,
