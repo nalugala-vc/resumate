@@ -19,6 +19,7 @@ export const DEFAULT: { [namespace]: () => RoutesConfig } = {
       ],
       post :[
         { path: '/signup', action: 'signup'},
+        { path: '/chatWithAI', action: 'chatWithAI'},
         { path: '/uploadResume', action: 'uploadResume'},
         { path: '/verify-otp', action: 'verifyOtp' },
         { path: '/signin', action: 'signin'},
