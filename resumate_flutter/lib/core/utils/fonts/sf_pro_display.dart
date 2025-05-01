@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 
 class SfProDisplay extends StatelessWidget {
   final String text;
@@ -16,7 +17,7 @@ class SfProDisplay extends StatelessWidget {
     required this.text,
     this.shouldTruncate = true,
     this.lineheight = 2,
-    this.textColor,
+    this.textColor = AppPallete.black,
     this.fontSize = 0,
     this.truncateLength = 45,
     this.fontWeight = FontWeight.bold,

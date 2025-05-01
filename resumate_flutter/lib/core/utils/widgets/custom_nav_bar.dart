@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/features/feed/view/pages/homepage.dart';
 import 'package:resumate_flutter/features/feed/view/pages/roadmap.dart';
+import 'package:resumate_flutter/features/mentorship/view/pages/explore_mentors_page.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   final List<Widget> _pages = [
     Homepage(),
     Roadmap(),
-    Text('Mentorship Page'),
+    ExploreMentorsPage(),
     Text('Profile Page'),
   ];
 

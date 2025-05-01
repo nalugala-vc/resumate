@@ -3,7 +3,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 
 class SearchBarWidget extends StatelessWidget {
-  const SearchBarWidget({super.key});
+  final String hintText;
+  const SearchBarWidget({super.key, required this.hintText});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class SearchBarWidget extends StatelessWidget {
                   borderSide: BorderSide(color: AppPallete.transparentColor),
                   borderRadius: BorderRadius.circular(7),
                 ),
-                hintText: 'Search jobs...',
+                hintText: hintText,
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
                 border: InputBorder.none,
               ),

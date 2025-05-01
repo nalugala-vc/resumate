@@ -25,6 +25,21 @@ export class AddMentor extends Action {
   }
 }
 
+export class FetchMentors extends Action {
+    constructor() {
+      super();
+      this.name = 'fetchMentors';
+      this.description = 'Fetch all mentors';
+      this.inputs = {}; 
+    }
+  
+    async run(data: ActionProcessor<FetchMentors>) {
+      const mentors = await Mentor.find({});
+      data.response.success = true;
+      data.response.mentors = mentors;
+    }
+  }
+
 export class DeleteMentor extends Action {
   constructor() {
     super();

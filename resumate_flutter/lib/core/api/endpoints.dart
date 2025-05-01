@@ -3,4 +3,7 @@ class Endpoints {
   static String signUp = '/signup';
   static String signIn = '/signin';
   static String verifyOTP = '/verify-otp';
+
+  //mentors
+  static String fetchMentor = '/fetchMentors';
 }
