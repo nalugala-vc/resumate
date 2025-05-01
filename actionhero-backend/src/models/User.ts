@@ -8,6 +8,13 @@ export interface IUser extends Document {
   isEmailVerified: boolean;
   otpCode?: string;
   otpExpiresAt?: Date;
+  likedMentors: string[]; 
+  dislikedMentors: string[]; 
+  bookedSessions?: {
+    mentorId: string;
+    date: string;
+    time: string;
+  }[];
   comparePassword(password: string): Promise<boolean>;
 }
 
@@ -18,6 +25,13 @@ const UserSchema: Schema<IUser> = new Schema({
   isEmailVerified: { type: Boolean, default: false },
   otpCode: { type: String }, 
   otpExpiresAt: { type: Date }, 
+  likedMentors: [{ type: String, ref: 'Mentor' }], 
+  dislikedMentors: [{ type: String, ref: 'Mentor' }], 
+  bookedSessions: [{
+    mentorId: { type: Schema.Types.ObjectId, ref: 'Mentor', required: true },
+    date: { type: String, required: true },
+    time: { type: String, required: true },
+  }],
 });
 
 // Hash password before saving if it's new/modified

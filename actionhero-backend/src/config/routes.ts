@@ -23,6 +23,10 @@ export const DEFAULT: { [namespace]: () => RoutesConfig } = {
         { path: '/uploadResume', action: 'uploadResume'},
         { path: '/verify-otp', action: 'verifyOtp' },
         { path: '/signin', action: 'signin'},
+        { path: '/addMentor', action: 'addMentor'},
+        { path: '/toggleLikeMentor', action: 'toggleLikeMentor'},
+        { path: '/bookMentorSession', action: 'bookMentorSession'},
+        { path: '/deleteMentor', action: 'deleteMentor'},
       ]
 
       /* ---------------------
