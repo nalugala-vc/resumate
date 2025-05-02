@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppPallete {
   static const Color primary100 = Color(0xFFEFF9F9);
   static const Color primary400 = Color(0xFF51B6B7);
+  static const Color primary700 = Color(0xFF448889);
   static const Color primary200 = Color(0xFFB6E2E2);
   static const Color pink400 = Color(0xFFFDB7B9);
   static const Color pink100 = Color(0xFFFFF8F8);

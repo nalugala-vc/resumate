@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
@@ -9,6 +10,7 @@ import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
 import 'package:resumate_flutter/features/ai/view/widgets/analyzing_popup.dart';
+import 'package:resumate_flutter/features/ai/viewmodel/ai_controller.dart';
 
 class UploadResumePage extends StatefulWidget {
   @override
@@ -16,6 +18,7 @@ class UploadResumePage extends StatefulWidget {
 }
 
 class _UploadResumePageState extends State<UploadResumePage> {
+  final controller = Get.put(AiController());
   File? _selectedFile;
 
   void _pickResume() async {
@@ -28,6 +31,34 @@ class _UploadResumePageState extends State<UploadResumePage> {
       setState(() {
         _selectedFile = File(result.files.single.path!);
       });
+    }
+  }
+
+  void _processResumeFile() async {
+    if (_selectedFile != null) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const AnalyzingPopup(),
+      );
+
+      String? resumeText = await controller.extractResumeText(
+        _selectedFile!,
+        onProgress: (message) {
+          debugPrint(message);
+        },
+      );
+
+      if (resumeText != null) {
+        debugPrint('Extracted text length: ${resumeText.length}');
+
+        await controller.uploadResumeAndEvaluate(resume: resumeText);
+      } else {
+        Navigator.pop(context); // Close analyzing popup
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to extract text from the resume')),
+        );
+      }
     }
   }
 
@@ -105,13 +136,7 @@ class _UploadResumePageState extends State<UploadResumePage> {
       padding: const EdgeInsets.only(top: 20),
       child: RoundedButton(
         label: 'analyze my resume',
-        onTap: () {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => const AnalyzingPopup(),
-          );
-        },
+        onTap: _processResumeFile,
       ),
     );
   }

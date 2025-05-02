@@ -7,4 +7,7 @@ class Endpoints {
   //mentors
   static String fetchMentor = '/fetchMentors';
   static String bookMentorSession = '/bookMentorSession';
+
+  //AI
+  static String uploadResume = '/uploadResume';
 }
