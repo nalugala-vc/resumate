@@ -15,6 +15,7 @@ export interface IUser extends Document {
     date: string;
     time: string;
   }[];
+  appliedJobs: { jobId: string; appliedAt: Date }[];
   comparePassword(password: string): Promise<boolean>;
 }
 
@@ -32,6 +33,11 @@ const UserSchema: Schema<IUser> = new Schema({
     date: { type: String, required: true },
     time: { type: String, required: true },
   }],
+  appliedJobs: [{
+    jobId: { type: Schema.Types.ObjectId, ref: 'JobOpportunity', required: true },
+    appliedAt: { type: Date, default: Date.now },
+  }],
+  
 });
 
 // Hash password before saving if it's new/modified

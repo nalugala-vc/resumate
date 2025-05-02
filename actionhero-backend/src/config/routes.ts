@@ -28,6 +28,10 @@ export const DEFAULT: { [namespace]: () => RoutesConfig } = {
         { path: '/toggleLikeMentor', action: 'toggleLikeMentor'},
         { path: '/bookMentorSession', action: 'bookMentorSession'},
         { path: '/deleteMentor', action: 'deleteMentor'},
+        { path: '/addCompany', action: 'addCompany'},
+        { path: '/deleteCompany', action: 'deleteCompany'},
+        { path: '/addJobOpportunity', action: 'addJobOpportunity'},
+        { path: '/deleteJobOpportunity', action: 'deleteJobOpportunity'},
       ]
 
       /* ---------------------
