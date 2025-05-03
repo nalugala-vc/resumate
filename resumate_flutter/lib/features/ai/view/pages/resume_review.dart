@@ -3,7 +3,6 @@ import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/custom_appbar.dart';
-import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 import 'package:resumate_flutter/features/ai/model/ResumeResults.dart';
 
 class ResumeReviewPage extends StatefulWidget {

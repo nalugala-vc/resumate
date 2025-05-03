@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
+import 'package:resumate_flutter/core/controller/base_controller.dart';
 
-class ResultsController extends GetxController {
+class ResultsController extends BaseController {
   static ResultsController get instance => Get.find();
   // Observable data
   final results = <String, double>{}.obs;

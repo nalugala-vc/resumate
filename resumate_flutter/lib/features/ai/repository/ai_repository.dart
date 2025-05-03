@@ -39,4 +39,34 @@ class AiRepository {
       return Left(AppFailure(e.toString()));
     }
   }
+
+  Future<Either<AppFailure, String>> chatWithAI({
+    required String message,
+  }) async {
+    final headers = await AppConfigs.authorizedHeaders();
+    final body = jsonEncode({"message": message});
+
+    try {
+      final response = await http.post(
+        Uri.parse(AppConfigs.appBaseUrl + Endpoints.chatWithAI),
+        headers: headers,
+        body: body,
+      );
+
+      final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
+
+      print(resBodyMap);
+
+      if (response.statusCode != 200) {
+        final message = resBodyMap['message'] ?? 'Something went wrong';
+        return Left(AppFailure(message));
+      }
+
+      print(resBodyMap);
+
+      return Right(resBodyMap['reply']);
+    } catch (e) {
+      return Left(AppFailure(e.toString()));
+    }
+  }
 }

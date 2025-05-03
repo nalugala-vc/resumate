@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/widgets/back_button.dart';
 import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -31,7 +32,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
       title: Row(
         children: [
-          showBackButton ? _buildBackButton() : SizedBox(),
+          showBackButton ? buildBackButton() : SizedBox(),
           spaceW10,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,20 +62,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: NotificationsIcon(),
         ),
       ],
-    );
-  }
-
-  Widget _buildBackButton() {
-    return GestureDetector(
-      onTap: () {
-        Get.back();
-      },
-      child: HeroIcon(
-        HeroIcons.chevronLeft,
-        style: HeroIconStyle.outline,
-        color: Colors.black,
-        size: 28,
-      ),
     );
   }
 }

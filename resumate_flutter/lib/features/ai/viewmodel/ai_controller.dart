@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pdf_text/pdf_text.dart';
 import 'package:resumate_flutter/core/controller/base_controller.dart';
+import 'package:resumate_flutter/features/ai/model/ChatMessage.dart';
 import 'package:resumate_flutter/features/ai/repository/ai_repository.dart';
 import 'package:resumate_flutter/features/ai/view/pages/resume_results.dart';
 
@@ -14,6 +15,34 @@ class AiController extends BaseController {
   final AiRepository _aiRepository = AiRepository();
 
   final errorMessage = ''.obs;
+  final RxList<ChatMessage> messages = <ChatMessage>[].obs;
+
+  Future<void> sendMessage({required String message}) async {
+    try {
+      // Add the user's message first
+      messages.add(ChatMessage(content: message, isUser: true));
+
+      setBusy(true);
+      errorMessage.value = '';
+
+      final res = await _aiRepository.chatWithAI(message: message);
+
+      res.fold(
+        (failure) {
+          errorMessage.value = failure.message;
+          Get.snackbar('Error', failure.message);
+        },
+        (reply) {
+          messages.add(ChatMessage(content: reply, isUser: false));
+        },
+      );
+    } catch (e) {
+      errorMessage.value = e.toString();
+      Get.snackbar('Error', e.toString());
+    } finally {
+      setBusy(false);
+    }
+  }
 
   Future<String?> extractResumeText(
     File file, {

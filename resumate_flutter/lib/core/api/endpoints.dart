@@ -10,4 +10,5 @@ class Endpoints {
 
   //AI
   static String uploadResume = '/uploadResume';
+  static String chatWithAI = '/chatWithAI';
 }
