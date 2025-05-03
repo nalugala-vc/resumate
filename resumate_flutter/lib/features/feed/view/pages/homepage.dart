@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart' show Get;
 import 'package:heroicons/heroicons.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
@@ -25,33 +24,34 @@ class Homepage extends StatelessWidget {
     final feedController = Get.find<FeedController>();
     final signinController = Get.find<SignInController>();
 
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Obx(() {
-            final results = resultsController.results;
+    return Obx(() {
+      final user = signinController.user;
 
-            List<MapEntry<String, double>> sortedResults =
-                results.entries.toList()
-                  ..sort((a, b) => b.value.compareTo(a.value));
+      final results = resultsController.results;
 
-            sortedResults.forEach((entry) {
-              List<CategoryMetric> metrics = resultsController
-                  .calculateCategoryMetrics(entry.key);
+      List<MapEntry<String, double>> sortedResults =
+          results.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
 
-              print(metrics);
-            });
-
-            final user = signinController.user;
-            if (user == null) {
-              return const Center(
-                child: Loader(loaderColor: AppPallete.primary400),
-              );
-            }
-            return Column(
+      sortedResults.forEach((entry) {
+        print('results $entry');
+        List<CategoryMetric> metrics = resultsController
+            .calculateCategoryMetrics(entry.key);
+      });
+      return Scaffold(
+        appBar:
+            user == null
+                ? PreferredSize(
+                  preferredSize: const Size.fromHeight(70),
+                  child: const Center(
+                    child: Loader(loaderColor: AppPallete.primary400),
+                  ),
+                )
+                : TopBarUser(name: user.name),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
               children: [
-                TopBarUser(name: user.name),
                 spaceH10,
                 ReadinessIndicator(),
                 spaceH20,
@@ -157,10 +157,10 @@ class Homepage extends StatelessWidget {
                   }),
                 ),
               ],
-            );
-          }),
+            ),
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

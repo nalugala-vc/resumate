@@ -6,10 +6,10 @@ import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/loader.dart';
 import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
-import 'package:resumate_flutter/features/feed/model/job.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/job_card.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/search_bar.dart';
 import 'package:resumate_flutter/features/feed/viewmodel/feed_controller.dart';
+import 'package:resumate_flutter/features/quiz/viewmodel/results_controller.dart';
 
 class JobMatches extends StatelessWidget {
   const JobMatches({super.key});
@@ -17,6 +17,7 @@ class JobMatches extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final feedController = Get.find<FeedController>();
+    final resultsController = Get.find<ResultsController>();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -59,6 +60,7 @@ class JobMatches extends StatelessWidget {
                   }
 
                   final jobList = feedController.jobOpportunities;
+                  final results = resultsController.results;
 
                   if (jobList.isEmpty) {
                     return const Center(child: Text("No jobs found"));
@@ -71,9 +73,15 @@ class JobMatches extends StatelessWidget {
                     itemCount: jobList.length,
                     itemBuilder: (context, index) {
                       final job = jobList[index];
+
+                      final categoryKey = job.category.toLowerCase();
+                      final matchScore = results[categoryKey] ?? 0.0;
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 20),
-                        child: JobCard(job: job, matchPercent: 10),
+                        child: JobCard(
+                          job: job,
+                          matchPercent: matchScore.toDouble(),
+                        ),
                       );
                     },
                   );

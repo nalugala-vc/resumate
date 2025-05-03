@@ -5,7 +5,6 @@ import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/app_bar_with_notification_icon.dart';
-import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
 import 'package:resumate_flutter/features/feed/model/JobOpportunities.dart';
 
