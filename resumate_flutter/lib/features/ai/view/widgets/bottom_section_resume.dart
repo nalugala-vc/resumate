@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
-import 'package:resumate_flutter/core/utils/widgets/custom_nav_bar.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
 import 'package:resumate_flutter/features/ai/model/ResumeResults.dart';
 import 'package:resumate_flutter/features/ai/view/pages/resume_review.dart';

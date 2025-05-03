@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/rendering.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:resumate_flutter/core/api/config.dart';
 import 'package:resumate_flutter/core/api/endpoints.dart';

@@ -310,7 +310,6 @@ class _ResumeReviewPageState extends State<ResumeReviewPage>
   }
 
   Widget _buildTab(String title, int index) {
-    final bool isSelected = _tabController.index == index;
     return AnimatedBuilder(
       animation: _tabController.animation!,
       builder: (context, child) {

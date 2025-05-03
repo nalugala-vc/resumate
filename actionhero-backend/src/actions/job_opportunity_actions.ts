@@ -34,6 +34,22 @@ export class AddJobOpportunity extends Action {
   }
 }
 
+export class GetAllJobOpportunities extends Action {
+    constructor() {
+      super();
+      this.name = 'getAllJobOpportunities';
+      this.description = 'Fetch all job opportunities including company details';
+      this.inputs = {};
+    }
+  
+    async run(data: ActionProcessor<GetAllJobOpportunities>) {
+      const jobs = await JobOpportunity.find().populate('company');
+      data.response.success = true;
+      data.response.jobs = jobs;
+    }
+  }
+  
+
 export class DeleteJobOpportunity extends Action {
   constructor() {
     super();

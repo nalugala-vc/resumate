@@ -17,6 +17,7 @@ export const DEFAULT: { [namespace]: () => RoutesConfig } = {
         { path: '/verify-email', action: 'verify-email' },
         { path: "/createChatRoom", action: "createChatRoom" },
         { path: "/fetchMentors", action: "fetchMentors" },
+        { path: '/getAllJobOpportunities', action: 'getAllJobOpportunities'},
       ],
       post :[
         { path: '/signup', action: 'signup'},
