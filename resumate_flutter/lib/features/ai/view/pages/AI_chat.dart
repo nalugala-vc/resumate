@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
-import 'package:resumate_flutter/core/utils/widgets/back_button.dart';
-import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
+import 'package:resumate_flutter/core/utils/widgets/app_bar_with_notification_icon.dart';
 import 'package:resumate_flutter/features/ai/view/widgets/bot_message.dart';
 import 'package:resumate_flutter/features/ai/view/widgets/chat_input_field.dart';
 import 'package:resumate_flutter/features/ai/view/widgets/user_message.dart';
@@ -42,17 +41,7 @@ class _AIChatPageState extends State<AIChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: buildBackButton(),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: NotificationsIcon(),
-          ),
-        ],
-      ),
+      appBar: AppBarWithNotificationIcon(),
       body: Column(
         children: [
           const SizedBox(height: 12),

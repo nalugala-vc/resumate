@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
+import 'package:resumate_flutter/features/feed/viewmodel/feed_controller.dart';
 import 'package:resumate_flutter/features/quiz/model/category_metric.dart';
 import 'package:resumate_flutter/features/quiz/viewmodel/results_controller.dart';
 
@@ -15,6 +16,7 @@ class ReadinessIndicator extends StatefulWidget {
 
 class _ReadinessIndicatorState extends State<ReadinessIndicator> {
   final resultsController = Get.find<ResultsController>();
+  final feedController = Get.find<FeedController>();
   String selectedTrack = '';
 
   @override
@@ -25,6 +27,8 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
       final sorted =
           results.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
       selectedTrack = _formatTrackName(sorted.first.key);
+
+      feedController.selectedTrack.value = sorted.first.key;
     }
   }
 
@@ -162,6 +166,8 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
                     onChanged: (value) {
                       setState(() {
                         selectedTrack = value!;
+                        final unformatted = _unformatTrackName(value);
+                        feedController.selectedTrack.value = unformatted;
                       });
                     },
                   ),

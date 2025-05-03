@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
+import 'package:resumate_flutter/core/utils/constants.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/widgets/app_bar_with_notification_icon.dart';
 import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
+import 'package:resumate_flutter/features/feed/model/JobOpportunities.dart';
 
 class JobDetailsPage extends StatelessWidget {
-  const JobDetailsPage({super.key});
+  final JobOpportunity job;
+  final double matchPercent;
+  const JobDetailsPage({
+    super.key,
+    required this.job,
+    required this.matchPercent,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: AppBarWithNotificationIcon(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Icon(Icons.arrow_back_ios_new, size: 20),
-                  NotificationsIcon(),
-                ],
-              ),
-
               spaceH20,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,22 +36,22 @@ class JobDetailsPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SfProDisplay(
-                          text: "Junior Product\nDesigner",
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          textColor: AppPallete.black,
-                          textAlignment: TextAlign.left,
-                          lineheight: 0,
+                        SizedBox(
+                          width: 200,
+                          child: SfProDisplay(
+                            text: job.title,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            textColor: AppPallete.black,
+                            textAlignment: TextAlign.left,
+                            lineheight: 0,
+                          ),
                         ),
+
                         spaceH10,
                         Wrap(
                           spacing: 8,
-                          children: [
-                            _tag("Full time"),
-                            _tag("Remote"),
-                            _tag("Contract"),
-                          ],
+                          children: [_tag(job.type), _tag(job.mode)],
                         ),
                       ],
                     ),
@@ -74,7 +75,7 @@ class JobDetailsPage extends StatelessWidget {
                             ),
                           ),
                           SfProDisplay(
-                            text: "75%\nmatch",
+                            text: "${matchPercent.toStringAsFixed(0)}%\nmatch",
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
                             textColor: AppPallete.black,
@@ -92,8 +93,11 @@ class JobDetailsPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _statBlock("Salary", "120K / yr"),
-                  _statBlock("Applicants", "20"),
-                  _statBlock("Expiry Date", "1st\nApril 2025"),
+                  _statBlock("Applicants", "${job.applicants}"),
+                  _statBlock(
+                    "Expiry Date",
+                    formatDateWithLineBreak(job.expiryDate),
+                  ),
                 ],
               ),
               spaceH15,
@@ -105,8 +109,8 @@ class JobDetailsPage extends StatelessWidget {
               ),
 
               spaceH10,
-              const ReadMoreText(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+              ReadMoreText(
+                job.description,
                 trimLines: 4,
                 trimMode: TrimMode.Line,
                 trimCollapsedText: " Read More",
@@ -131,31 +135,15 @@ class JobDetailsPage extends StatelessWidget {
                 textColor: AppPallete.black,
               ),
               spaceH10,
-              _responsibilityItem(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              ),
-              _responsibilityItem(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              ),
-              _responsibilityItem(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              ),
-              _responsibilityItem(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-              ),
-              _responsibilityItem(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              ...job.responsibilities.map(
+                (responsibility) => _responsibilityItem(responsibility),
               ),
 
               spaceH50,
+              RoundedButton(label: 'Apply Now', onTap: () {}),
             ],
           ),
         ),
-      ),
-
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: RoundedButton(label: 'Apply Now', onTap: () {}),
       ),
     );
   }

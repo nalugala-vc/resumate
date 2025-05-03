@@ -31,7 +31,7 @@ const JobOpportunitySchema: Schema<IJobOpportunity> = new Schema({
   expiryDate: { type: Date, required: true },
   applicants: { type: Number, default: 0 },
   responsibilities: [{ type: String, required: true }],
-  category: { type: String, enum: ['frontend', 'backend', 'machine learning'], required: true }
+  category: { type: String, enum: ['frontend', 'backend', 'ml'], required: true }
 });
 
 export const JobOpportunity = mongoose.model<IJobOpportunity>('JobOpportunity', JobOpportunitySchema);

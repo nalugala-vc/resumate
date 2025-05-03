@@ -13,6 +13,10 @@ class ResultsController extends BaseController {
   // Non-observable function
   late Function(String) calculateCategoryMetrics;
 
+  double getReadinessForTrack(String trackKey) {
+    return results[trackKey] ?? 0;
+  }
+
   // You can create an init method to set everything
   void setResultsData({
     required Map<String, double> resultsData,

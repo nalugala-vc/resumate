@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/widgets/loader.dart';
 import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 import 'package:resumate_flutter/features/feed/model/job.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/job_card.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/search_bar.dart';
+import 'package:resumate_flutter/features/feed/viewmodel/feed_controller.dart';
 
 class JobMatches extends StatelessWidget {
   const JobMatches({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final feedController = Get.find<FeedController>();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -48,29 +53,31 @@ class JobMatches extends StatelessWidget {
               SearchBarWidget(hintText: 'Search jobs...'),
               SingleChildScrollView(
                 physics: NeverScrollableScrollPhysics(),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(16),
-                  itemCount: jobs.length,
-                  itemBuilder: (context, index) {
-                    final job = jobs[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: JobCard(
-                        companyName: job.companyName,
-                        employeeCount: job.employeeCount,
-                        jobTitle: job.jobTitle,
-                        jobDescription: job.jobDescription,
-                        matchPercent: job.matchPercent,
-                        imageUrl: job.imageUrl,
-                        onTap: () {
-                          // Handle tap here (navigate, show dialog, etc.)
-                          print("Tapped ${job.jobTitle}");
-                        },
-                      ),
-                    );
-                  },
-                ),
+                child: Obx(() {
+                  if (feedController.isLoading.value) {
+                    return const Loader(loaderColor: AppPallete.primary400);
+                  }
+
+                  final jobList = feedController.jobOpportunities;
+
+                  if (jobList.isEmpty) {
+                    return const Center(child: Text("No jobs found"));
+                  }
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(16),
+                    itemCount: jobList.length,
+                    itemBuilder: (context, index) {
+                      final job = jobList[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: JobCard(job: job, matchPercent: 10),
+                      );
+                    },
+                  );
+                }),
               ),
             ],
           ),

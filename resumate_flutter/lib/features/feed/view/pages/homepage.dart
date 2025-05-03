@@ -7,11 +7,12 @@ import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/loader.dart';
 import 'package:resumate_flutter/features/auth/viewmodel/auth_controller.dart';
-import 'package:resumate_flutter/features/feed/model/job.dart';
+import 'package:resumate_flutter/features/feed/view/pages/job_matches.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/job_card.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/quick_actions.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/readiness_indicator.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/top_bar_user.dart';
+import 'package:resumate_flutter/features/feed/viewmodel/feed_controller.dart';
 import 'package:resumate_flutter/features/quiz/model/category_metric.dart';
 import 'package:resumate_flutter/features/quiz/viewmodel/results_controller.dart';
 
@@ -21,6 +22,7 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final resultsController = Get.find<ResultsController>();
+    final feedController = Get.find<FeedController>();
     final signinController = Get.find<SignInController>();
 
     return Scaffold(
@@ -98,7 +100,7 @@ class Homepage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        print('Text tapped!');
+                        Get.to(() => JobMatches());
                       },
                       child: Row(
                         children: [
@@ -121,29 +123,38 @@ class Homepage extends StatelessWidget {
                 spaceH20,
                 SingleChildScrollView(
                   physics: NeverScrollableScrollPhysics(),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(16),
-                    itemCount: jobs.length,
-                    itemBuilder: (context, index) {
-                      final job = jobs[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: JobCard(
-                          companyName: job.companyName,
-                          employeeCount: job.employeeCount,
-                          jobTitle: job.jobTitle,
-                          jobDescription: job.jobDescription,
-                          matchPercent: job.matchPercent,
-                          imageUrl: job.imageUrl,
-                          onTap: () {
-                            // Handle tap here (navigate, show dialog, etc.)
-                            print("Tapped ${job.jobTitle}");
-                          },
-                        ),
-                      );
-                    },
-                  ),
+                  child: Obx(() {
+                    if (feedController.isLoading.value) {
+                      return const Loader(loaderColor: AppPallete.primary400);
+                    }
+
+                    final jobList = feedController.filteredJobOpportunities;
+
+                    if (jobList.isEmpty) {
+                      return const Center(child: Text("No jobs found"));
+                    }
+
+                    final selectedTrackKey = feedController.selectedTrack.value;
+                    final readinessPercent = resultsController
+                        .getReadinessForTrack(selectedTrackKey);
+
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.all(16),
+                      itemCount: jobList.length,
+                      itemBuilder: (context, index) {
+                        final job = jobList[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: JobCard(
+                            job: job,
+                            matchPercent: readinessPercent.toDouble(),
+                          ),
+                        );
+                      },
+                    );
+                  }),
                 ),
               ],
             );

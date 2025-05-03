@@ -20,6 +20,7 @@ class SfProDisplay extends StatelessWidget {
     this.textColor = AppPallete.black,
     this.fontSize = 0,
     this.truncateLength = 45,
+
     this.fontWeight = FontWeight.bold,
     this.textAlignment = TextAlign.center,
     this.underline = false,
