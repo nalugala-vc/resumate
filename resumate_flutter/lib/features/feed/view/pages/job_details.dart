@@ -4,6 +4,7 @@ import 'package:readmore/readmore.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
 
 class JobDetailsPage extends StatelessWidget {
@@ -23,21 +24,7 @@ class JobDetailsPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.arrow_back_ios_new, size: 20),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey.shade300, width: 2),
-                    ),
-                    child: Center(
-                      child: HeroIcon(
-                        HeroIcons.bell,
-                        style: HeroIconStyle.outline,
-                        color: Colors.black,
-                        size: 28,
-                      ),
-                    ),
-                  ),
+                  NotificationsIcon(),
                 ],
               ),
 

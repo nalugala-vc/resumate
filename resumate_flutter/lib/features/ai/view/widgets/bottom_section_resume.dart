@@ -7,6 +7,7 @@ import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/custom_nav_bar.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
 import 'package:resumate_flutter/features/ai/model/ResumeResults.dart';
+import 'package:resumate_flutter/features/ai/view/pages/resume_review.dart';
 
 class BottomSectionResume extends StatelessWidget {
   final ResumeResults results;
@@ -48,7 +49,7 @@ class BottomSectionResume extends StatelessWidget {
           child: RoundedButton(
             label: 'see detailed analysis',
             onTap: () {
-              Get.to(() => CustomBottomNavBar());
+              Get.to(() => ResumeReviewPage(results: results));
             },
             height: 55,
 

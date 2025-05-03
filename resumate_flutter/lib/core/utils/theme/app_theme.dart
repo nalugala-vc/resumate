@@ -9,6 +9,11 @@ class AppTheme {
       );
 
   static final lightMode = ThemeData.light().copyWith(
+    tabBarTheme: const TabBarThemeData(
+      // This removes the default padding
+      labelPadding: EdgeInsets.zero,
+      // You can also set other properties here
+    ),
     scaffoldBackgroundColor: AppPallete.whiteColor,
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.all(16),
@@ -18,6 +23,7 @@ class AppTheme {
         fontSize: 18,
         fontWeight: FontWeight.w400,
       ),
+
       enabledBorder: _border(AppPallete.primary400, 1),
       focusedBorder: _border(),
       errorBorder: _border(AppPallete.errorColor, 1),
