@@ -1,0 +1,98 @@
+import { Action, ActionProcessor } from 'actionhero';
+import { User } from '../models/User';
+import * as jwt from 'jsonwebtoken';
+import { JwtPayload } from 'jsonwebtoken';
+
+const JWT_SECRET = 'yourSuperSecret';
+
+export class SaveQuizResults extends Action {
+  constructor() {
+    super();
+    this.name = 'saveQuizResults';
+    this.description = 'Save quiz results to user profile';
+    this.inputs = {
+      token: { required: true },
+      results: { required: true },
+      topCategory: { required: true },
+      level: { required: true },
+      recommendations: { required: true },
+      categoryNames: { required: true },
+    };
+  }
+
+  async run(data: ActionProcessor<SaveQuizResults>) {
+    const { token, results, topCategory, level, recommendations, categoryNames } = data.params;
+
+    let userId;
+    try {
+   
+      const decoded = jwt.verify(token, JWT_SECRET);
+
+let userId: string;
+if (typeof decoded === 'string') {
+  throw new Error('Invalid token payload');
+} else {
+  userId = (decoded as JwtPayload).id;
+}
+    } catch {
+      throw new Error('Invalid token');
+    }
+
+    const user = await User.findById(userId);
+    if (!user) throw new Error('User not found');
+
+    user.quizResults = {
+      results,
+      topCategory,
+      level,
+      recommendations,
+      categoryNames,
+    };
+
+    await user.save();
+
+    data.response.success = true;
+    data.response.message = 'Quiz results saved';
+  }
+}
+export class GetQuizResults extends Action {
+    constructor() {
+      super();
+      this.name = 'getQuizResults';
+      this.description = 'Get saved quiz results for a user';
+      this.inputs = {
+        token: { required: true },
+      };
+    }
+  
+    async run(data: ActionProcessor<GetQuizResults>) {
+      const { token } = data.params;
+  
+      let userId;
+      try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        
+
+let userId: string;
+if (typeof decoded === 'string') {
+  throw new Error('Invalid token payload');
+} else {
+  userId = (decoded as JwtPayload).id;
+}
+      } catch {
+        throw new Error('Invalid token');
+      }
+  
+      const user = await User.findById(userId);
+      if (!user || !user.quizResults) {
+        data.response.success = true;
+        data.response.hasResults = false;
+        return;
+      }
+  
+      data.response.success = true;
+      data.response.hasResults = true;
+      data.response.quizResults = user.quizResults;
+    }
+  }
+  

@@ -15,6 +15,14 @@ export interface IUser extends Document {
     date: string;
     time: string;
   }[];
+  quizResults: {
+    results: { [category: string]: number },
+    topCategory: string,
+    level: string,
+    recommendations: string[],
+    categoryNames: { [key: string]: string },
+  },
+  
   appliedJobs: { jobId: string; appliedAt: Date }[];
   comparePassword(password: string): Promise<boolean>;
 }
@@ -33,6 +41,14 @@ const UserSchema: Schema<IUser> = new Schema({
     date: { type: String, required: true },
     time: { type: String, required: true },
   }],
+  quizResults: {
+    results: { type: Map, of: Number, default: {} },
+    topCategory: { type: String, default: '' },
+    level: { type: String, default: '' },
+    recommendations: { type: [String], default: [] },
+    categoryNames: { type: Map, of: String, default: {} },
+  },
+  
   appliedJobs: [{
     jobId: { type: Schema.Types.ObjectId, ref: 'JobOpportunity', required: true },
     appliedAt: { type: Date, default: Date.now },
