@@ -14,7 +14,7 @@ import 'package:resumate_flutter/features/feed/view/widgets/quick_actions.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/readiness_indicator.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/top_bar_user.dart';
 import 'package:resumate_flutter/features/feed/viewmodel/feed_controller.dart';
-import 'package:resumate_flutter/features/quiz/view/pages/quiz_page.dart';
+import 'package:resumate_flutter/features/quiz/view/pages/career_quiz_banner.dart';
 import 'package:resumate_flutter/features/quiz/viewmodel/results_controller.dart';
 
 class Homepage extends StatelessWidget {
@@ -72,7 +72,7 @@ class Homepage extends StatelessWidget {
                       icon: HeroIcons.lightBulb,
                       name: 'AI Career Quiz',
                       onTap: () {
-                        Get.to(() => QuizPage());
+                        Get.to(() => CareerQuizBanner(showAppBar: true));
                       },
                     ),
                     QuickActions(

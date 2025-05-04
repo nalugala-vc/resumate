@@ -16,6 +16,7 @@ import 'package:resumate_flutter/features/feed/view/pages/roadmap.dart';
 import 'package:resumate_flutter/features/feed/view/pages/video_player.dart';
 import 'package:resumate_flutter/features/mentorship/view/pages/explore_mentors_page.dart';
 import 'package:resumate_flutter/features/ai/view/pages/AI_chat.dart';
+import 'package:resumate_flutter/features/quiz/view/pages/career_quiz_banner.dart';
 import 'package:resumate_flutter/features/quiz/view/pages/quiz_page.dart';
 import 'package:resumate_flutter/features/quiz/view/pages/test_results.dart';
 

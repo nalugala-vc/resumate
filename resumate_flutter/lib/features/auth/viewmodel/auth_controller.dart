@@ -9,6 +9,7 @@ import 'package:resumate_flutter/features/auth/view/sign_in.dart';
 import 'package:resumate_flutter/features/feed/viewmodel/feed_controller.dart';
 import 'package:resumate_flutter/features/quiz/model/quiz_results.dart';
 import 'package:resumate_flutter/features/quiz/repository/quiz_repository.dart';
+import 'package:resumate_flutter/features/quiz/view/pages/career_quiz_banner.dart';
 import 'package:resumate_flutter/features/quiz/view/pages/quiz_page.dart';
 import 'package:resumate_flutter/features/quiz/viewmodel/results_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -147,7 +148,7 @@ class SignInController extends BaseController {
 
             if (isMissingOrInvalid) {
               print('🔁 Navigating to QuizPage...');
-              Get.to(() => QuizPage());
+              Get.to(() => CareerQuizBanner(showAppBar: false));
               return;
             }
 
