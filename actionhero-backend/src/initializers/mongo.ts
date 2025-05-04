@@ -8,7 +8,7 @@ export class MongoInitializer extends Initializer {
   }
 
   async initialize() {
-    const uri = 'mongodb://localhost:27017/resumate';
+    const uri = process.env.MONGODB_URI;
 
     try {
       await mongoose.connect(uri);
