@@ -21,6 +21,7 @@ export interface IUser extends Document {
     level: string,
     recommendations: string[],
     categoryNames: { [key: string]: string },
+    selectedAnswers: { [questionId: string]: number },
   },
   
   appliedJobs: { jobId: string; appliedAt: Date }[];
@@ -47,7 +48,8 @@ const UserSchema: Schema<IUser> = new Schema({
     level: { type: String, default: '' },
     recommendations: { type: [String], default: [] },
     categoryNames: { type: Map, of: String, default: {} },
-  },
+    selectedAnswers: { type: Map, of: Number, default: {} }, // 👈 Add this line
+  },  
   
   appliedJobs: [{
     jobId: { type: Schema.Types.ObjectId, ref: 'JobOpportunity', required: true },

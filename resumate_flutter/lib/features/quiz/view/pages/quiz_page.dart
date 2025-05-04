@@ -22,11 +22,10 @@ class _QuizPageState extends State<QuizPage> {
   Map<int, int> selectedAnswers = {};
 
   List<CategoryMetric> calculateCategoryMetrics(String category) {
-    // Define which questions correspond to which metrics
-
     List<CategoryMetric> metrics = [];
 
-    // Calculate each metric score
+    print(selectedAnswers);
+
     metricQuestionMap[category]?.forEach((metricName, questionIndices) {
       double totalScore = 0;
       double maxPossibleScore = 0;
@@ -36,24 +35,18 @@ class _QuizPageState extends State<QuizPage> {
             selectedAnswers.containsKey(questionIndex)) {
           int answerIndex = selectedAnswers[questionIndex]!;
 
-          // Add the score for this question
           if (questions[questionIndex].categoryScores.containsKey(category)) {
             double score =
                 questions[questionIndex].categoryScores[category]![answerIndex];
             totalScore += score;
-
-            // Calculate max possible score for this question
             double maxScore = questions[questionIndex].categoryScores[category]!
                 .reduce((max, value) => value > max ? value : max);
             maxPossibleScore += maxScore;
           }
         }
       }
-
-      // Calculate percentage
       double percentage = (totalScore / maxPossibleScore) * 100;
 
-      // Add the metric
       metrics.add(
         CategoryMetric(
           name: metricName,
@@ -179,7 +172,20 @@ class _QuizPageState extends State<QuizPage> {
       levelData: level,
       recs: recommendations,
       catNames: skillCategories.map((key, value) => MapEntry(key, value.name)),
-      calcFunc: calculateCategoryMetrics,
+    );
+
+    resultsController.saveQuizResults(
+      categoryNames: skillCategories.map(
+        (key, value) => MapEntry(key, value.name),
+      ),
+      level: level,
+      topCategory: topCategory,
+      resultsData: results,
+      recommendations: recommendations,
+      selectedAnswers: selectedAnswers.map(
+        (key, value) =>
+            MapEntry(key.toString(), value), // Convert keys to String
+      ),
     );
 
     Navigator.of(context).push(

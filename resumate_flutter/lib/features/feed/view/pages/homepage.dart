@@ -35,7 +35,12 @@ class Homepage extends StatelessWidget {
       sortedResults.forEach((entry) {
         print('results $entry');
         List<CategoryMetric> metrics = resultsController
-            .calculateCategoryMetrics(entry.key);
+            .calculateCategoryMetrics(
+              entry.key,
+              user!.quizResults!.selectedAnswers,
+            );
+
+        print(metrics);
       });
       return Scaffold(
         appBar:

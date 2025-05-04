@@ -92,15 +92,14 @@ export class Signin extends Action {
     const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
       expiresIn: '1d',
     });
+
+    delete user.password;
+    delete user.__v;
+
   
     response.success = true;
     response.token = token;
-    response.user = {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      isEmailVerified: user.isEmailVerified,
-    };
+    response.user = user;
   }
   
 }

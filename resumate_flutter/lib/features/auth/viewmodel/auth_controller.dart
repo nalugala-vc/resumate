@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resumate_flutter/core/controller/base_controller.dart';
+import 'package:resumate_flutter/core/utils/widgets/custom_nav_bar.dart';
 import 'package:resumate_flutter/features/auth/model/User.dart';
 import 'package:resumate_flutter/features/auth/repository/auth_repository.dart';
 import 'package:resumate_flutter/features/auth/view/otp.dart';
 import 'package:resumate_flutter/features/auth/view/sign_in.dart';
+import 'package:resumate_flutter/features/feed/viewmodel/feed_controller.dart';
 import 'package:resumate_flutter/features/quiz/view/pages/quiz_page.dart';
+import 'package:resumate_flutter/features/quiz/viewmodel/results_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpController extends BaseController {
@@ -103,8 +106,9 @@ class SignInController extends BaseController {
   UserModel? get user => currentUser.value;
 
   Future<void> signIn({required String email, required String password}) async {
+    final prefs = await SharedPreferences.getInstance();
+
     try {
-      final prefs = await SharedPreferences.getInstance();
       setBusy(true);
       errorMessage.value = '';
 
@@ -112,23 +116,65 @@ class SignInController extends BaseController {
 
       res.fold(
         (failure) {
-          print(failure.message);
+          print('❌ Sign-in failed: ${failure.message}');
           Get.snackbar('Error', failure.message);
         },
         (user) async {
-          currentUser.value = user;
+          try {
+            // Save user locally
+            currentUser.value = user;
 
-          // Persist values for future sessions
-          await prefs.setString('USER_ID', user.id);
-          await prefs.setString('USER_EMAIL', user.email);
-          await prefs.setString('USER_TOKEN', user.token);
-          await prefs.setString('USER_NAME', user.name);
+            await prefs.setString('USER_ID', user.id);
+            await prefs.setString('USER_EMAIL', user.email);
+            await prefs.setString('USER_TOKEN', user.token);
+            await prefs.setString('USER_NAME', user.name);
 
-          Get.snackbar('Success', 'Signed in successfully');
-          Get.to(() => QuizPage());
+            Get.snackbar('Success', 'Signed in successfully');
+
+            // Debugging output
+            print('📦 quizResults: ${user.quizResults}');
+            print('📦 quizResults.results: ${user.quizResults?.results}');
+            print('🧪 is null: ${user.quizResults == null}');
+            print('🧪 is empty: ${user.quizResults?.results.isEmpty}');
+            print('🧪 keys in results: ${user.quizResults?.results.keys}');
+
+            final isMissingOrInvalid =
+                user.quizResults == null ||
+                user.quizResults!.results.isEmpty ||
+                !user.quizResults!.results.keys.any((key) => key is String);
+
+            if (isMissingOrInvalid) {
+              print('🔁 Navigating to QuizPage...');
+              Get.to(() => QuizPage());
+              return;
+            }
+
+            // Safely use quiz data
+            final resultsController = Get.find<ResultsController>();
+
+            resultsController.setResultsData(
+              resultsData: user.quizResults!.results,
+              topCat: user.quizResults!.topCategory,
+              levelData: user.quizResults!.level,
+              recs: user.quizResults!.recommendations,
+              catNames: user.quizResults!.categoryNames,
+            );
+
+            final feedController = Get.find<FeedController>();
+            feedController.selectedTrack.value = user.quizResults!.topCategory;
+
+            print('✅ Navigating to CustomBottomNavBar');
+            Get.to(() => CustomBottomNavBar());
+          } catch (e, stack) {
+            print('🔥 ERROR inside success block: $e');
+            print('📍 Stack trace:\n$stack');
+            Get.snackbar('Error', e.toString());
+          }
         },
       );
-    } catch (e) {
+    } catch (e, stack) {
+      print('🚨 Unexpected error in signIn(): $e');
+      print('📍 Stack trace:\n$stack');
       errorMessage.value = e.toString();
       Get.snackbar('Error', e.toString());
     } finally {

@@ -5,6 +5,7 @@ import 'package:resumate_flutter/core/api/endpoints.dart';
 import 'package:resumate_flutter/core/utils/failure/failure.dart';
 import 'package:http/http.dart' as http;
 import 'package:resumate_flutter/features/auth/model/User.dart';
+import 'package:resumate_flutter/features/quiz/model/quiz_results.dart';
 
 class AuthRepository {
   Future<Either<AppFailure, String>> signup({
@@ -27,8 +28,9 @@ class AuthRepository {
       );
 
       final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
+      print(resBodyMap);
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != 200 || resBodyMap['success'] != true) {
         final message = resBodyMap['message'] ?? 'Something went wrong';
         return Left(AppFailure(message));
       }
@@ -54,6 +56,7 @@ class AuthRepository {
       );
 
       final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
+      print(resBodyMap);
 
       if (response.statusCode != 200 || resBodyMap['success'] != true) {
         final message = resBodyMap['error'] ?? 'Something went wrong';
@@ -62,15 +65,19 @@ class AuthRepository {
 
       final token = resBodyMap['token'] as String;
       final userInfo = resBodyMap['user'] as Map<String, dynamic>;
-      final id = userInfo['id'] as String;
+      final id = userInfo['_id'] as String;
       final userEmail = userInfo['email'] as String;
       final userName = userInfo['name'] as String;
+      final quizResultsMap = userInfo['quizResults'] as Map<String, dynamic>?;
+      final quizResults =
+          quizResultsMap != null ? QuizResults.fromMap(quizResultsMap) : null;
 
       final userModel = UserModel(
         id: id,
         email: userEmail,
         token: token,
         name: userName,
+        quizResults: quizResults,
       );
 
       return Right(userModel);

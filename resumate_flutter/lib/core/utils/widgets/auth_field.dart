@@ -20,6 +20,7 @@ class AuthField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(hintText: hintText),
       obscureText: isObscureText,
+      textCapitalization: TextCapitalization.none,
       validator:
           validator ??
           (value) {
