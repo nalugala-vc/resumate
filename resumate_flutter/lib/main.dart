@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:resumate_flutter/core/di/app_bindings.dart';
 import 'package:resumate_flutter/core/utils/theme/app_theme.dart';
 import 'package:resumate_flutter/core/utils/widgets/custom_nav_bar.dart';
+import 'package:resumate_flutter/core/utils/widgets/splash_screen.dart';
 import 'package:resumate_flutter/features/ai/view/pages/upload_resume.dart';
 import 'package:resumate_flutter/features/auth/view/otp.dart';
 import 'package:resumate_flutter/features/auth/view/sign_in.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.lightMode,
-      home: SignIn(),
+      home: SplashScreen(),
     );
   }
 }

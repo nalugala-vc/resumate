@@ -58,7 +58,7 @@ const UserSchema: Schema<IUser> = new Schema({
   
 });
 
-// Hash password before saving if it's new/modified
+
 UserSchema.pre<IUser>('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 10);

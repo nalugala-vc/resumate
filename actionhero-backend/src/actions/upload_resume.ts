@@ -1,9 +1,8 @@
 import { Action, api } from "actionhero";
 import { CohereClient } from "cohere-ai";
 
-// Initialize Cohere client
 const cohere = new CohereClient({
-  token: "fJwZnBfOXnuaATnzma2cKr6lOmwa7U4WG5Y7tr93", // Replace with your real key
+  token: process.env.COHERE_TOKEN, 
 });
 
 export class UploadResume extends Action {
@@ -96,14 +95,13 @@ export class UploadResume extends Action {
 
   async run(data: { connection: any; response: any }) {
     try {
-      // Get the resume text directly from the request data
+ 
       const { resume_text } = data.connection.params;
 
       if (!resume_text) {
         throw new Error("No resume text provided.");
       }
 
-      // Modify the prompt to request detailed feedback and improvement steps
       const prompt = `
 Analyze this resume and rate it out of 100 for job market optimization.
 Provide ratings for: Structure, Language/Clarity, Impact of Experience, and ATS Compatibility.
@@ -204,7 +202,7 @@ Return ONLY valid JSON in this format:
       );
 
       const coherePromise = cohere.chat({
-        model: "command", // You could also use "command-light" or "command-r"
+        model: "command", 
         message: prompt,
         temperature: 0.3,
       });
@@ -216,19 +214,19 @@ Return ONLY valid JSON in this format:
       console.log("Raw Cohere response:", rawText.substring(0, 100) + "...");
 
       try {
-        // Check if the response is a valid JSON string
-        const jsonMatch = rawText.match(/\{[\s\S]*\}/); // Find any JSON object
+      
+        const jsonMatch = rawText.match(/\{[\s\S]*\}/); 
         const jsonStr = jsonMatch ? jsonMatch[0] : null;
 
         if (jsonStr) {
-          // Try parsing the JSON response
+        
           const result = JSON.parse(jsonStr);
           console.log("Successfully parsed result:", result);
           return result;
         } else {
-          // If no JSON object found, handle it as plain text
+      
           console.error("Failed to find JSON in AI response, returning raw text.");
-          return { message: rawText };  // Return plain text as the response
+          return { message: rawText };  
         }
       } catch (parseError) {
         console.error("Failed to parse AI response:", parseError);

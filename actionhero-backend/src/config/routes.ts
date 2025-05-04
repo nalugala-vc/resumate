@@ -28,14 +28,21 @@ export const DEFAULT: { [namespace]: () => RoutesConfig } = {
         { path: '/addMentor', action: 'addMentor'},
         { path: '/toggleLikeMentor', action: 'toggleLikeMentor'},
         { path: '/bookMentorSession', action: 'bookMentorSession'},
-        { path: '/deleteMentor', action: 'deleteMentor'},
+   
         { path: '/addCompany', action: 'addCompany'},
-        { path: '/deleteCompany', action: 'deleteCompany'},
+        { path: '/getQuizResults', action: 'getQuizResults'},
+       
         { path: '/addJobOpportunity', action: 'addJobOpportunity'},
         { path: '/applyForJob', action: 'applyForJob'},
         { path: '/saveQuizResults', action: 'saveQuizResults'},
-        { path: '/getQuizResults', action: 'getQuizResults'},
+      
+      ],
+      delete : [
+        { path: '/deleteCompany', action: 'deleteCompany'},
+      
         { path: '/deleteJobOpportunity', action: 'deleteJobOpportunity'},
+        { path: '/deleteMentor', action: 'deleteMentor'},
+
       ]
 
       /* ---------------------

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resumate_flutter/core/controller/base_controller.dart';
 import 'package:resumate_flutter/features/feed/model/JobOpportunities.dart';
@@ -24,16 +25,15 @@ class FeedController extends BaseController {
 
   List<JobOpportunity> get filteredJobOpportunities {
     if (selectedTrack.value.isEmpty) {
-      // Print all categories before returning
       for (var job in jobOpportunities) {
-        print('Category: ${job.category}');
+        debugPrint('Category: ${job.category}');
       }
       return jobOpportunities;
     }
 
-    print('Selected track: ${selectedTrack.value}');
+    debugPrint('Selected track: ${selectedTrack.value}');
     for (var job in jobOpportunities) {
-      print('Category: ${job.category}');
+      debugPrint('Category: ${job.category}');
     }
 
     return jobOpportunities
@@ -53,7 +53,7 @@ class FeedController extends BaseController {
 
       res.fold(
         (failure) {
-          print(failure.message);
+          debugPrint(failure.message);
           Get.snackbar('Error', failure.message);
         },
         (jobOpportunitiesList) async {
@@ -83,7 +83,7 @@ class FeedController extends BaseController {
 
       res.fold(
         (failure) {
-          print(failure.message);
+          debugPrint(failure.message);
           Get.snackbar('Error', failure.message);
         },
         (success) async {
@@ -92,8 +92,8 @@ class FeedController extends BaseController {
             final job = jobOpportunities[index];
 
             job.applicants += 1;
-            jobOpportunities[index] = job; // reassign to trigger observers
-            jobOpportunities.refresh(); // trigger UI update
+            jobOpportunities[index] = job;
+            jobOpportunities.refresh();
           }
           Get.snackbar('Success', 'Job applied successfully');
         },

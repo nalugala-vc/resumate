@@ -8,6 +8,8 @@ node_modules/*
 public/javascript/ActionheroWebsocketClient.js
 dist
 
+.env
+
 # Node / NPM
 npm-debug.log
 

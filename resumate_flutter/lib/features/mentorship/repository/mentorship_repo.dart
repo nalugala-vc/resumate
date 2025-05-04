@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:resumate_flutter/core/api/config.dart';
 import 'package:resumate_flutter/core/api/endpoints.dart';
@@ -24,7 +25,7 @@ class MentorshipRepo {
         return Left(AppFailure(message));
       }
 
-      print(resBodyMap);
+      debugPrint(resBodyMap.toString());
 
       final mentorsJson = resBodyMap['mentors'] as List<dynamic>;
       final mentors = mentorsJson.map((e) => Mentor.fromMap(e)).toList();

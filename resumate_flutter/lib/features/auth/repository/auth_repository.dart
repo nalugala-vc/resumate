@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:resumate_flutter/core/api/config.dart';
 import 'package:resumate_flutter/core/api/endpoints.dart';
@@ -28,7 +29,7 @@ class AuthRepository {
       );
 
       final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
-      print(resBodyMap);
+      debugPrint(resBodyMap.toString());
 
       if (response.statusCode != 200 || resBodyMap['success'] != true) {
         final message = resBodyMap['message'] ?? 'Something went wrong';
@@ -56,7 +57,7 @@ class AuthRepository {
       );
 
       final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
-      print(resBodyMap);
+      debugPrint(resBodyMap.toString());
 
       if (response.statusCode != 200 || resBodyMap['success'] != true) {
         final message = resBodyMap['error'] ?? 'Something went wrong';

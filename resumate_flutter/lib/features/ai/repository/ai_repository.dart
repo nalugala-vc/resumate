@@ -22,14 +22,10 @@ class AiRepository {
 
       final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
 
-      print(resBodyMap);
-
       if (response.statusCode != 200) {
         final message = resBodyMap['message'] ?? 'Something went wrong';
         return Left(AppFailure(message));
       }
-
-      print(resBodyMap);
 
       final resumeResults = ResumeResults.fromJson(resBodyMap);
       return Right(resumeResults);
@@ -53,14 +49,10 @@ class AiRepository {
 
       final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
 
-      print(resBodyMap);
-
       if (response.statusCode != 200) {
         final message = resBodyMap['message'] ?? 'Something went wrong';
         return Left(AppFailure(message));
       }
-
-      print(resBodyMap);
 
       return Right(resBodyMap['reply']);
     } catch (e) {

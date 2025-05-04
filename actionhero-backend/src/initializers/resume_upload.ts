@@ -13,13 +13,13 @@ export class ResumeUploadInitializer extends Initializer {
   }
 
   async initialize() {
-    // Create upload directory if it doesn't exist
+
     const uploadDir = path.join(process.cwd(), "uploads");
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir);
     }
     
-    // Use the correct log method
+  
     log("Resume upload system initialized", "info");
   }
 

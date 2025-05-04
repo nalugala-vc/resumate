@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resumate_flutter/core/controller/base_controller.dart';
 import 'package:resumate_flutter/features/mentorship/repository/mentorship_repo.dart';
@@ -19,7 +20,7 @@ class MentorshipController extends BaseController {
 
       res.fold(
         (failure) {
-          print(failure.message);
+          debugPrint(failure.message);
           Get.snackbar('Error', failure.message);
         },
         (mentorsList) async {
@@ -55,7 +56,7 @@ class MentorshipController extends BaseController {
 
       res.fold(
         (failure) {
-          print(failure.message);
+          debugPrint(failure.message);
           Get.snackbar('Error', failure.message);
         },
         (success) {

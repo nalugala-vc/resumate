@@ -3,18 +3,16 @@ import { User } from '../models/User';
 import * as jwt from 'jsonwebtoken';
 import * as nodemailer from 'nodemailer';
 
-const JWT_SECRET = 'yourSuperSecret';
-
 function generateOTP(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit
+  return Math.floor(100000 + Math.random() * 900000).toString(); 
 }
 
 async function sendOTPEmail(email: string, otp: string) {
   const transporter = nodemailer.createTransport({
-    service: 'gmail', // or your provider
+    service: 'gmail', 
     auth: {
       user: 'vanessachebukwa@gmail.com',
-      pass: 'evddfimtfwcndtde',
+      pass: process.env.GOOGLE_CODE,
     },
   });
 
@@ -43,26 +41,26 @@ export class Signup extends Action {
     async run(data: ActionProcessor<Signup>) {
       const { email, password,name } = data.params;
   
-      // Check if the email already exists
+  
       const existing = await User.findOne({ email });
       if (existing) throw new Error('Email already exists');
   
       const otpCode = generateOTP();
-      const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
+      const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); 
   
       const user = new User({ email, password, name,otpCode, otpExpiresAt ,});
       await user.save();
   
       try {
-        // Attempt to send the OTP email
+      
         await sendOTPEmail(email, otpCode);
       } catch (err) {
-        // Log the error if sending email fails
+       
         console.error('❌ Failed to send OTP email:', err);
         throw new Error('Failed to send OTP email');
       }
   
-      // Respond to the client if everything is fine
+     
       data.response.success = true;
       data.response.message = 'User created. OTP sent to email.';
     }
@@ -89,7 +87,7 @@ export class Signin extends Action {
       throw new Error('Invalid credentials');
     }
   
-    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
       expiresIn: '1d',
     });
 

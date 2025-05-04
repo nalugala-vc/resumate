@@ -40,9 +40,9 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
         feedController.selectedTrack.value = sorted.first.key;
       });
 
-      print('Selected track: $selectedTrack');
+      debugPrint('Selected track: $selectedTrack');
     } else {
-      print('WARNING: No results data found in ResultsController');
+      debugPrint('WARNING: No results data found in ResultsController');
 
       selectedTrack = 'Frontend Developer';
       Future.microtask(() {
@@ -71,12 +71,14 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
       final quizresults = resultsController.quizResults.value;
       final results = resultsController.results;
 
-      print('user $user');
-      print('quiz results from readiness $quizresults');
-      print('quiz whatever is empty ${(user?.quizResults?.topCategory == '')}');
+      debugPrint('user $user');
+      debugPrint('quiz results from readiness $quizresults');
+      debugPrint(
+        'quiz whatever is empty ${(user?.quizResults?.topCategory == '')}',
+      );
 
       if (results.isEmpty) {
-        print('WARNING: Results map is empty in build method');
+        debugPrint('WARNING: Results map is empty in build method');
 
         return Column(
           children: [

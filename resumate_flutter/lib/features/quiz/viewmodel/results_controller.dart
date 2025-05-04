@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resumate_flutter/core/controller/base_controller.dart';
 import 'package:resumate_flutter/features/auth/viewmodel/auth_controller.dart';
@@ -113,7 +114,7 @@ class ResultsController extends BaseController {
 
       res.fold(
         (failure) {
-          print(failure.message);
+          debugPrint(failure.message);
           Get.snackbar('Error', failure.message);
         },
         (quiz) {
@@ -121,7 +122,7 @@ class ResultsController extends BaseController {
 
           saveMap("SELECTED_ANSWERS", quiz.selectedAnswers);
 
-          print('quiz results ${quizResults}');
+          debugPrint('quiz results ${quizResults}');
           Get.snackbar('Success', 'Saved results successfully');
         },
       );

@@ -19,7 +19,6 @@ class AiController extends BaseController {
 
   Future<void> sendMessage({required String message}) async {
     try {
-      // Add the user's message first
       messages.add(ChatMessage(content: message, isUser: true));
 
       setBusy(true);
@@ -87,18 +86,15 @@ class AiController extends BaseController {
       errorMessage.value = '';
 
       final res = await _aiRepository.uploadResume(resume: resume);
-      print(res);
+      debugPrint(res.toString());
 
       res.fold(
         (failure) {
-          print(failure.message);
+          debugPrint(failure.message);
           Get.snackbar('Error', failure.message);
         },
         (resumeResults) {
-          Navigator.of(
-            Get.context!,
-            rootNavigator: true,
-          ).pop(); // Dismiss dialog
+          Navigator.of(Get.context!, rootNavigator: true).pop();
           Get.snackbar('Success', 'Resume evaluated successfully');
           Get.to(() => ResumeResultsPage(results: resumeResults));
         },

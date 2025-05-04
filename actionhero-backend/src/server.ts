@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 
+// src/dotenv.ts
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+
 // load any custom code, configure the env, as needed
 
 async function main() {

@@ -83,7 +83,7 @@ class SignUpController extends BaseController {
 
       res.fold(
         (failure) {
-          print(failure.message);
+          debugPrint(failure.message);
           Get.snackbar('Error', failure.message);
         },
         (successMessage) async {
@@ -133,7 +133,7 @@ class SignInController extends BaseController {
 
       res.fold(
         (failure) {
-          print('❌ Sign-in failed: ${failure.message}');
+          debugPrint('❌ Sign-in failed: ${failure.message}');
           Get.snackbar('Error', failure.message);
         },
         (user) async {
@@ -148,20 +148,13 @@ class SignInController extends BaseController {
 
             Get.snackbar('Success', 'Signed in successfully');
 
-            // Debugging output
-            print('📦 quizResults: ${user.quizResults}');
-            print('📦 quizResults.results: ${user.quizResults?.results}');
-            print('🧪 is null: ${user.quizResults == null}');
-            print('🧪 is empty: ${user.quizResults?.results.isEmpty}');
-            print('🧪 keys in results: ${user.quizResults?.results.keys}');
-
             final isMissingOrInvalid =
                 user.quizResults == null ||
                 user.quizResults!.results.isEmpty ||
+                // ignore: unnecessary_type_check
                 !user.quizResults!.results.keys.any((key) => key is String);
 
             if (isMissingOrInvalid) {
-              print('🔁 Navigating to QuizPage...');
               Get.to(() => CareerQuizBanner(showAppBar: false));
               return;
             }
@@ -180,18 +173,18 @@ class SignInController extends BaseController {
             final feedController = Get.find<FeedController>();
             feedController.selectedTrack.value = user.quizResults!.topCategory;
 
-            print('✅ Navigating to CustomBottomNavBar');
+            debugPrint('✅ Navigating to CustomBottomNavBar');
             Get.to(() => CustomBottomNavBar());
           } catch (e, stack) {
-            print('🔥 ERROR inside success block: $e');
-            print('📍 Stack trace:\n$stack');
+            debugPrint('🔥 ERROR inside success block: $e');
+            debugPrint('📍 Stack trace:\n$stack');
             Get.snackbar('Error', e.toString());
           }
         },
       );
     } catch (e, stack) {
-      print('🚨 Unexpected error in signIn(): $e');
-      print('📍 Stack trace:\n$stack');
+      debugPrint('🚨 Unexpected error in signIn(): $e');
+      debugPrint('📍 Stack trace:\n$stack');
       errorMessage.value = e.toString();
       Get.snackbar('Error', e.toString());
     } finally {

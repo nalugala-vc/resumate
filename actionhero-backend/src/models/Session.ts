@@ -42,7 +42,7 @@ const SessionSchema: Schema<ISession> = new Schema({
   timestamps: true 
 });
 
-// Create compound index for preventing double bookings
+
 SessionSchema.index({ mentorId: 1, date: 1, timeSlot: 1 }, { unique: true });
 
 export const Session = mongoose.model<ISession>('Session', SessionSchema);

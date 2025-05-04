@@ -9,7 +9,7 @@ export class ToggleLikeMentor extends Action {
     this.inputs = {
       userId: { required: true },
       mentorId: { required: true },
-      likeAction: { required: true }, // 'like' or 'dislike' or 'remove'
+      likeAction: { required: true }, 
     };
   }
 
@@ -20,7 +20,7 @@ export class ToggleLikeMentor extends Action {
     const user = await User.findById(userId);
     if (!user) throw new Error('User not found');
 
-    // Initialize arrays if they don't exist
+
     if (!user.likedMentors) user.likedMentors = [];
     if (!user.dislikedMentors) user.dislikedMentors = [];
 
@@ -28,10 +28,10 @@ export class ToggleLikeMentor extends Action {
 
     switch (likeAction) {
       case 'like':
-        // Remove from disliked if present
+      
         user.dislikedMentors = user.dislikedMentors.filter(id => id !== mentorIdStr);
         
-        // Add to liked if not already present
+      
         if (!user.likedMentors.includes(mentorIdStr)) {
           user.likedMentors.push(mentorIdStr);
         }
@@ -39,10 +39,10 @@ export class ToggleLikeMentor extends Action {
         break;
         
       case 'dislike':
-        // Remove from liked if present
+       
         user.likedMentors = user.likedMentors.filter(id => id !== mentorIdStr);
         
-        // Add to disliked if not already present
+        
         if (!user.dislikedMentors.includes(mentorIdStr)) {
           user.dislikedMentors.push(mentorIdStr);
         }
@@ -50,7 +50,7 @@ export class ToggleLikeMentor extends Action {
         break;
         
       case 'remove':
-        // Remove from both liked and disliked
+      
         user.likedMentors = user.likedMentors.filter(id => id !== mentorIdStr);
         user.dislikedMentors = user.dislikedMentors.filter(id => id !== mentorIdStr);
         message = 'Mentor removed from likes/dislikes';
