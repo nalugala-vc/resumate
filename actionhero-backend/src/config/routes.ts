@@ -32,6 +32,7 @@ export const DEFAULT: { [namespace]: () => RoutesConfig } = {
         { path: '/addCompany', action: 'addCompany'},
         { path: '/deleteCompany', action: 'deleteCompany'},
         { path: '/addJobOpportunity', action: 'addJobOpportunity'},
+        { path: '/applyForJob', action: 'applyForJob'},
         { path: '/saveQuizResults', action: 'saveQuizResults'},
         { path: '/getQuizResults', action: 'getQuizResults'},
         { path: '/deleteJobOpportunity', action: 'deleteJobOpportunity'},

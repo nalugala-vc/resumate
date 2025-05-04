@@ -1,5 +1,6 @@
 import { Action, ActionProcessor } from 'actionhero';
 import { JobOpportunity } from '../models/JobOpportunities';
+import { User } from '../models/User';
 
 export class AddJobOpportunity extends Action {
   constructor() {
@@ -66,3 +67,48 @@ export class DeleteJobOpportunity extends Action {
     data.response.message = 'Job deleted';
   }
 }
+
+export class ApplyForJob extends Action {
+    constructor() {
+      super();
+      this.name = 'applyForJob';
+      this.description = 'Allows a user to apply for a job once only';
+      this.inputs = {
+        jobId: { required: true },
+        userId: { required: true },
+      };
+    }
+    async run(data: ActionProcessor<ApplyForJob>) {
+
+      const { jobId, userId } = data.params;
+  
+      const user = await User.findById(userId);
+      if (!user) throw new Error('User not found');
+  
+      const job = await JobOpportunity.findById(jobId);
+      if (!job) throw new Error('Job not found');
+
+      const alreadyApplied = user.appliedJobs.some((job) =>
+        job.jobId.toString() === jobId
+      );
+  
+      if (alreadyApplied) {
+        data.response.success = false;
+        data.response.message = 'User has already applied for this job';
+        return;
+      }
+  
+    
+      user.appliedJobs.push({ jobId, appliedAt: new Date() });
+
+      await user.save();
+  
+    
+      job.applicants = (job.applicants || 0) + 1;
+      await job.save();
+  
+      data.response.success = true;
+      data.response.message = 'Job application submitted successfully';
+      data.response.user = user;
+    }
+  }
