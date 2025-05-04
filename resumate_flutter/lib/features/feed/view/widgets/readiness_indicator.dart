@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:resumate_flutter/core/utils/constants.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
@@ -32,7 +33,7 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
       final sorted =
           results.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
 
-      selectedTrack = _formatTrackName(sorted.first.key);
+      selectedTrack = getTitleFromTrack(sorted.first.key);
 
       // Delay the reactive update to after build is safe
       Future.microtask(() {
@@ -47,19 +48,6 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
       Future.microtask(() {
         feedController.selectedTrack.value = 'frontend';
       });
-    }
-  }
-
-  String _formatTrackName(String key) {
-    switch (key) {
-      case 'frontend':
-        return 'Frontend Developer';
-      case 'backend':
-        return 'Backend Developer';
-      case 'ml':
-        return 'ML Engineer';
-      default:
-        return key;
     }
   }
 
@@ -227,7 +215,7 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
                       icon: const Icon(Icons.arrow_drop_down),
                       items:
                           sortedResults.map((entry) {
-                            final name = _formatTrackName(entry.key);
+                            final name = getTitleFromTrack(entry.key);
                             return DropdownMenuItem(
                               value: name,
                               child: SfProDisplay(
