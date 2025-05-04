@@ -5,19 +5,20 @@ import 'package:resumate_flutter/core/controller/base_controller.dart';
 import 'package:resumate_flutter/features/auth/viewmodel/auth_controller.dart';
 import 'package:resumate_flutter/features/quiz/model/category_metric.dart';
 import 'package:resumate_flutter/features/quiz/model/question.dart';
+import 'package:resumate_flutter/features/quiz/model/quiz_results.dart';
 import 'package:resumate_flutter/features/quiz/repository/quiz_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ResultsController extends BaseController {
   static ResultsController get instance => Get.find();
   final authController = Get.find<SignInController>();
+  final QuizRepository _quizRepository = QuizRepository();
   // Observable data
   final results = <String, double>{}.obs;
   final topCategory = ''.obs;
   final level = ''.obs;
   final recommendations = <String>[].obs;
   final categoryNames = <String, String>{}.obs;
-  final QuizRepository _quizRepository = QuizRepository();
 
   RxList mentors = [].obs;
   final errorMessage = ''.obs;
@@ -85,6 +86,7 @@ class ResultsController extends BaseController {
     categoryNames.value = catNames;
   }
 
+  final quizResults = Rxn<QuizResults>();
   Future<void> saveQuizResults({
     required Map<String, String> categoryNames,
     required String level,
@@ -114,29 +116,12 @@ class ResultsController extends BaseController {
           print(failure.message);
           Get.snackbar('Error', failure.message);
         },
-        (results) async {
-          print('results controller $results');
-          final currentUser = authController.currentUser.value;
-          if (currentUser != null) {
-            final updatedUser = currentUser.copyWith(quizResults: results);
+        (quiz) {
+          quizResults.value = quiz;
 
-            // ✅ Update observable user
-            authController.currentUser(updatedUser);
+          saveMap("SELECTED_ANSWERS", quiz.selectedAnswers);
 
-            // ✅ Persist updated user to SharedPreferences
-            final updatedJson = updatedUser.toJson(); // returns a Map
-            final updatedString = jsonEncode(updatedJson);
-            await prefs.setString('USER_MODEL', updatedString);
-
-            print(
-              'Immediately after update: ${authController.currentUser.value?.quizResults}',
-            );
-
-            print('updated user $updatedUser');
-            print('current user ${authController.currentUser.value}');
-          }
-
-          authController.update();
+          print('quiz results ${quizResults}');
           Get.snackbar('Success', 'Saved results successfully');
         },
       );
@@ -146,5 +131,22 @@ class ResultsController extends BaseController {
     } finally {
       setBusy(false);
     }
+  }
+
+  Future<void> saveMap(String key, Map<String, int> map) async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = jsonEncode(map);
+    await prefs.setString(key, jsonString);
+  }
+
+  Future<Map<String, int>?> getMap(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(key);
+    if (jsonString != null) {
+      final decodedMap = jsonDecode(jsonString) as Map<String, dynamic>;
+      // Need to cast the values to int explicitly
+      return decodedMap.map((k, v) => MapEntry(k, v as int));
+    }
+    return null;
   }
 }

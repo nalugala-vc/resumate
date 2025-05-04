@@ -78,7 +78,12 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
   Widget build(BuildContext context) {
     return Obx(() {
       final user = signinController.currentUser.value;
+      final quizresults = resultsController.quizResults.value;
       final results = resultsController.results;
+
+      print('user $user');
+      print('quiz results from readiness $quizresults');
+      print('quiz whatever is empty ${(user?.quizResults?.topCategory == '')}');
 
       if (results.isEmpty) {
         print('WARNING: Results map is empty in build method');
@@ -133,7 +138,9 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
       final List<CategoryMetric> metrics = resultsController
           .calculateCategoryMetrics(
             selectedKey,
-            user!.quizResults!.selectedAnswers,
+            (user?.quizResults?.topCategory == '')
+                ? quizresults!.selectedAnswers
+                : user!.quizResults!.selectedAnswers,
           );
 
       return Column(

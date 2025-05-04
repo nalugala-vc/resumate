@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
-import 'package:resumate_flutter/features/quiz/model/category_metric.dart';
+import 'package:resumate_flutter/features/auth/viewmodel/auth_controller.dart';
 import 'package:resumate_flutter/features/quiz/model/question.dart';
 import 'package:resumate_flutter/features/quiz/model/skills_category.dart';
 import 'package:resumate_flutter/features/quiz/view/pages/test_results.dart';

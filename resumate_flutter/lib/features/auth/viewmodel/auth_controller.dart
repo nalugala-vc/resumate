@@ -7,6 +7,8 @@ import 'package:resumate_flutter/features/auth/repository/auth_repository.dart';
 import 'package:resumate_flutter/features/auth/view/otp.dart';
 import 'package:resumate_flutter/features/auth/view/sign_in.dart';
 import 'package:resumate_flutter/features/feed/viewmodel/feed_controller.dart';
+import 'package:resumate_flutter/features/quiz/model/quiz_results.dart';
+import 'package:resumate_flutter/features/quiz/repository/quiz_repository.dart';
 import 'package:resumate_flutter/features/quiz/view/pages/quiz_page.dart';
 import 'package:resumate_flutter/features/quiz/viewmodel/results_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -98,7 +100,7 @@ class SignInController extends BaseController {
   final AuthRepository _authRepo = AuthRepository();
 
   final errorMessage = ''.obs;
-  final Rxn<UserModel> currentUser = Rxn<UserModel>(); // Reactive user state
+  var currentUser = Rxn<UserModel>();
 
   final email = TextEditingController();
   final password = TextEditingController();

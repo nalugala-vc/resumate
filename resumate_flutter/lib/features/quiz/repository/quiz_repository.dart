@@ -5,6 +5,7 @@ import 'package:resumate_flutter/core/api/config.dart';
 import 'package:resumate_flutter/core/api/endpoints.dart';
 import 'package:resumate_flutter/core/utils/failure/failure.dart';
 import 'package:http/http.dart' as http;
+import 'package:resumate_flutter/features/auth/model/User.dart';
 import 'package:resumate_flutter/features/quiz/model/quiz_results.dart';
 
 class QuizRepository {
@@ -40,17 +41,12 @@ class QuizRepository {
 
       final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
 
-      print(response);
-      print(resBodyMap);
-
       if (response.statusCode != 200) {
         final message = resBodyMap['message'] ?? 'Something went wrong';
         return Left(AppFailure(message));
       }
 
       final userInfo = resBodyMap['user'] as Map<String, dynamic>;
-
-      print(resBodyMap);
       final quizResultsMap = userInfo['quizResults'] as Map<String, dynamic>?;
       final quizResults =
           quizResultsMap != null ? QuizResults.fromMap(quizResultsMap) : null;

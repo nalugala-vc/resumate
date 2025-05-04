@@ -27,23 +27,6 @@ class Homepage extends StatelessWidget {
     return Obx(() {
       final user = signinController.currentUser.value;
 
-      print('user $user');
-
-      final results = resultsController.results;
-
-      List<MapEntry<String, double>> sortedResults =
-          results.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
-
-      sortedResults.forEach((entry) {
-        print('results $entry');
-        List<CategoryMetric> metrics = resultsController
-            .calculateCategoryMetrics(
-              entry.key,
-              user!.quizResults!.selectedAnswers,
-            );
-
-        print(metrics);
-      });
       return Scaffold(
         appBar:
             user == null

@@ -46,4 +46,16 @@ class QuizResults {
       ),
     };
   }
+
+  @override
+  String toString() {
+    return 'QuizResults(\n'
+        '  results: $results,\n'
+        '  topCategory: $topCategory,\n'
+        '  level: $level,\n'
+        '  recommendations: $recommendations,\n'
+        '  categoryNames: $categoryNames,\n'
+        '  selectedAnswers: $selectedAnswers\n'
+        ')';
+  }
 }

@@ -23,6 +23,7 @@ class UserModel {
       'id': id,
       'email': email,
       'token': token,
+      'name': name,
       if (quizResults != null) 'quizResults': quizResults!.toMap(),
     };
   }
