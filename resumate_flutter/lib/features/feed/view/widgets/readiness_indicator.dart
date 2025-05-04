@@ -77,7 +77,7 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final user = signinController.user;
+      final user = signinController.currentUser.value;
       final results = resultsController.results;
 
       if (results.isEmpty) {

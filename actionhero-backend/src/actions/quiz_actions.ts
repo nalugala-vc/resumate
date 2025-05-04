@@ -72,6 +72,9 @@ export class SaveQuizResults extends Action {
   
     data.response.success = true;
     data.response.message = 'Quiz results saved';
+    data.response.user = user;
+
+    
   }
   
 }

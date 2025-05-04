@@ -5,9 +5,10 @@ import 'package:resumate_flutter/core/api/config.dart';
 import 'package:resumate_flutter/core/api/endpoints.dart';
 import 'package:resumate_flutter/core/utils/failure/failure.dart';
 import 'package:http/http.dart' as http;
+import 'package:resumate_flutter/features/quiz/model/quiz_results.dart';
 
 class QuizRepository {
-  Future<Either<AppFailure, bool>> saveQuizResults({
+  Future<Either<AppFailure, QuizResults>> saveQuizResults({
     required String token,
     required Map<String, double> results,
     required String topCategory,
@@ -47,9 +48,14 @@ class QuizRepository {
         return Left(AppFailure(message));
       }
 
-      print(resBodyMap);
+      final userInfo = resBodyMap['user'] as Map<String, dynamic>;
 
-      return Right(true);
+      print(resBodyMap);
+      final quizResultsMap = userInfo['quizResults'] as Map<String, dynamic>?;
+      final quizResults =
+          quizResultsMap != null ? QuizResults.fromMap(quizResultsMap) : null;
+
+      return Right(quizResults!);
     } catch (e) {
       return Left(AppFailure(e.toString()));
     }

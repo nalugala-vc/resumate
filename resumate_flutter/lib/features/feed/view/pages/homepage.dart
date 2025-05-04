@@ -25,7 +25,9 @@ class Homepage extends StatelessWidget {
     final signinController = Get.find<SignInController>();
 
     return Obx(() {
-      final user = signinController.user;
+      final user = signinController.currentUser.value;
+
+      print('user $user');
 
       final results = resultsController.results;
 

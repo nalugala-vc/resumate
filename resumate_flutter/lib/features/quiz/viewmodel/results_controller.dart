@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:resumate_flutter/core/controller/base_controller.dart';
+import 'package:resumate_flutter/features/auth/viewmodel/auth_controller.dart';
 import 'package:resumate_flutter/features/quiz/model/category_metric.dart';
 import 'package:resumate_flutter/features/quiz/model/question.dart';
 import 'package:resumate_flutter/features/quiz/repository/quiz_repository.dart';
@@ -7,13 +10,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ResultsController extends BaseController {
   static ResultsController get instance => Get.find();
+  final authController = Get.find<SignInController>();
   // Observable data
   final results = <String, double>{}.obs;
   final topCategory = ''.obs;
   final level = ''.obs;
   final recommendations = <String>[].obs;
   final categoryNames = <String, String>{}.obs;
-  Function(String)? _calculateMetricsFunc;
   final QuizRepository _quizRepository = QuizRepository();
 
   RxList mentors = [].obs;
@@ -101,7 +104,7 @@ class ResultsController extends BaseController {
         categoryNames: categoryNames,
         level: level,
         recommendations: recommendations,
-        results: results,
+        results: resultsData,
         topCategory: topCategory,
         selectedAnswers: selectedAnswers,
       );
@@ -111,12 +114,30 @@ class ResultsController extends BaseController {
           print(failure.message);
           Get.snackbar('Error', failure.message);
         },
-        (success) {
-          if (success) {
-            Get.snackbar('Success', 'Saved results successfully');
-          } else {
-            Get.snackbar('Error', 'Saving quiz results failed. Try again.');
+        (results) async {
+          print('results controller $results');
+          final currentUser = authController.currentUser.value;
+          if (currentUser != null) {
+            final updatedUser = currentUser.copyWith(quizResults: results);
+
+            // ✅ Update observable user
+            authController.currentUser(updatedUser);
+
+            // ✅ Persist updated user to SharedPreferences
+            final updatedJson = updatedUser.toJson(); // returns a Map
+            final updatedString = jsonEncode(updatedJson);
+            await prefs.setString('USER_MODEL', updatedString);
+
+            print(
+              'Immediately after update: ${authController.currentUser.value?.quizResults}',
+            );
+
+            print('updated user $updatedUser');
+            print('current user ${authController.currentUser.value}');
           }
+
+          authController.update();
+          Get.snackbar('Success', 'Saved results successfully');
         },
       );
     } catch (e) {
