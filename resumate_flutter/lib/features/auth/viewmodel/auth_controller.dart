@@ -7,10 +7,7 @@ import 'package:resumate_flutter/features/auth/repository/auth_repository.dart';
 import 'package:resumate_flutter/features/auth/view/otp.dart';
 import 'package:resumate_flutter/features/auth/view/sign_in.dart';
 import 'package:resumate_flutter/features/feed/viewmodel/feed_controller.dart';
-import 'package:resumate_flutter/features/quiz/model/quiz_results.dart';
-import 'package:resumate_flutter/features/quiz/repository/quiz_repository.dart';
 import 'package:resumate_flutter/features/quiz/view/pages/career_quiz_banner.dart';
-import 'package:resumate_flutter/features/quiz/view/pages/quiz_page.dart';
 import 'package:resumate_flutter/features/quiz/viewmodel/results_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,6 +19,16 @@ class SignUpController extends BaseController {
   final email = TextEditingController();
   final password = TextEditingController();
   final confirmPassword = TextEditingController();
+
+  @override
+  void onClose() {
+    email.dispose();
+    password.dispose();
+    name.dispose();
+    confirmPassword.dispose();
+
+    super.onClose();
+  }
 
   final errorMessage = ''.obs;
 
@@ -105,6 +112,13 @@ class SignInController extends BaseController {
 
   final email = TextEditingController();
   final password = TextEditingController();
+
+  @override
+  void onClose() {
+    email.dispose();
+    password.dispose();
+    super.onClose();
+  }
 
   UserModel? get user => currentUser.value;
 
