@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:readmore/readmore.dart';
 import 'package:resumate_flutter/core/utils/constants.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
@@ -6,19 +8,26 @@ import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/app_bar_with_notification_icon.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
-import 'package:resumate_flutter/features/feed/model/JobOpportunities.dart';
+import 'package:resumate_flutter/features/feed/view/widgets/apply_job_popup.dart';
+import 'package:resumate_flutter/features/feed/viewmodel/feed_controller.dart';
 
 class JobDetailsPage extends StatelessWidget {
-  final JobOpportunity job;
+  final String jobID;
   final double matchPercent;
   const JobDetailsPage({
     super.key,
-    required this.job,
+    required this.jobID,
     required this.matchPercent,
   });
 
   @override
   Widget build(BuildContext context) {
+    final feedController = Get.find<FeedController>();
+    final job = feedController.getJobById(jobID);
+
+    if (job == null) {
+      return const Center(child: Text("Job not found"));
+    }
     return Scaffold(
       appBar: AppBarWithNotificationIcon(),
       body: SafeArea(
@@ -92,7 +101,11 @@ class JobDetailsPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _statBlock("Salary", "120K / yr"),
-                  _statBlock("Applicants", "${job.applicants}"),
+                  Obx(() {
+                    final job = feedController.getJobById(jobID);
+                    return _statBlock("Applicants", "${job?.applicants ?? 0}");
+                  }),
+
                   _statBlock(
                     "Expiry Date",
                     formatDateWithLineBreak(job.expiryDate),
@@ -139,7 +152,21 @@ class JobDetailsPage extends StatelessWidget {
               ),
 
               spaceH50,
-              RoundedButton(label: 'Apply Now', onTap: () {}),
+              RoundedButton(
+                label: 'Apply Now',
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder:
+                        (context) => ApplyJobPopup(
+                          email: job.company.email,
+                          phoneNo: job.company.phoneNumber,
+                        ),
+                  );
+                  feedController.applyForJob(jobId: job.id);
+                },
+              ),
             ],
           ),
         ),

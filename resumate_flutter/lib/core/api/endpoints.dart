@@ -14,6 +14,7 @@ class Endpoints {
 
   //feed
   static String getAllJobOpportunities = '/getAllJobOpportunities';
+  static String applyForJob = '/applyForJob';
 
   //quiz
   static String saveQuizResults = '/saveQuizResults';

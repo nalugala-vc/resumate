@@ -16,7 +16,7 @@ class JobCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(() => JobDetailsPage(job: job, matchPercent: matchPercent));
+        Get.to(() => JobDetailsPage(jobID: job.id, matchPercent: matchPercent));
       },
       borderRadius: BorderRadius.circular(20),
       child: Container(
@@ -121,8 +121,10 @@ class JobCard extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     Get.to(
-                      () =>
-                          JobDetailsPage(job: job, matchPercent: matchPercent),
+                      () => JobDetailsPage(
+                        jobID: job.id,
+                        matchPercent: matchPercent,
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(

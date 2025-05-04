@@ -7,7 +7,7 @@ class JobOpportunity {
   final String type;
   final String mode;
   final DateTime expiryDate;
-  final int applicants;
+  int applicants;
   final List<String> responsibilities;
   final String category;
   final String image;
