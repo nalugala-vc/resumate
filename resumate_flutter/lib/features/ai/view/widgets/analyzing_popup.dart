@@ -57,7 +57,8 @@ class _AnalyzingPopupState extends State<AnalyzingPopup>
                 spaceH10,
 
                 const Text(
-                  'Just reading through your resume',
+                  'Just reading through your resume.',
+
                   style: TextStyle(color: Colors.grey, fontSize: 14),
                 ),
                 spaceH30,

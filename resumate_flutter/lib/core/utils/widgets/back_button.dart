@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 
-Widget buildBackButton() {
+Widget buildBackButton({Color arrowColor = AppPallete.black}) {
   return GestureDetector(
     onTap: () {
       Get.back();
@@ -10,7 +11,7 @@ Widget buildBackButton() {
     child: HeroIcon(
       HeroIcons.chevronLeft,
       style: HeroIconStyle.outline,
-      color: Colors.black,
+      color: arrowColor,
       size: 28,
     ),
   );

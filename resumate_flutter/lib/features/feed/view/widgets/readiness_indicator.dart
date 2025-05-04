@@ -26,25 +26,27 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
   void initState() {
     super.initState();
 
-    // Debug print to check if results controller has data
-    print(
-      'ReadinessIndicator initState - Results data: ${resultsController.results}',
-    );
-
     final results = resultsController.results;
+
     if (results.isNotEmpty) {
       final sorted =
           results.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
 
       selectedTrack = _formatTrackName(sorted.first.key);
-      feedController.selectedTrack.value = sorted.first.key;
+
+      // Delay the reactive update to after build is safe
+      Future.microtask(() {
+        feedController.selectedTrack.value = sorted.first.key;
+      });
 
       print('Selected track: $selectedTrack');
     } else {
       print('WARNING: No results data found in ResultsController');
-      // Set a default track if no results are available
+
       selectedTrack = 'Frontend Developer';
-      feedController.selectedTrack.value = 'frontend';
+      Future.microtask(() {
+        feedController.selectedTrack.value = 'frontend';
+      });
     }
   }
 

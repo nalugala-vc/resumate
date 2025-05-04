@@ -5,6 +5,8 @@ import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/loader.dart';
+import 'package:resumate_flutter/features/ai/view/pages/AI_chat.dart';
+import 'package:resumate_flutter/features/ai/view/pages/upload_resume.dart';
 import 'package:resumate_flutter/features/auth/viewmodel/auth_controller.dart';
 import 'package:resumate_flutter/features/feed/view/pages/job_matches.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/job_card.dart';
@@ -12,7 +14,7 @@ import 'package:resumate_flutter/features/feed/view/widgets/quick_actions.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/readiness_indicator.dart';
 import 'package:resumate_flutter/features/feed/view/widgets/top_bar_user.dart';
 import 'package:resumate_flutter/features/feed/viewmodel/feed_controller.dart';
-import 'package:resumate_flutter/features/quiz/model/category_metric.dart';
+import 'package:resumate_flutter/features/quiz/view/pages/quiz_page.dart';
 import 'package:resumate_flutter/features/quiz/viewmodel/results_controller.dart';
 
 class Homepage extends StatelessWidget {
@@ -62,17 +64,23 @@ class Homepage extends StatelessWidget {
                     QuickActions(
                       icon: HeroIcons.arrowUpTray,
                       name: 'Upload Resume',
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => UploadResumePage());
+                      },
                     ),
                     QuickActions(
                       icon: HeroIcons.lightBulb,
                       name: 'AI Career Quiz',
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => QuizPage());
+                      },
                     ),
                     QuickActions(
                       icon: HeroIcons.chatBubbleLeftRight,
-                      name: 'Mock Interviews',
-                      onTap: () {},
+                      name: 'Chat with AI',
+                      onTap: () {
+                        Get.to(() => AIChatPage());
+                      },
                     ),
                   ],
                 ),

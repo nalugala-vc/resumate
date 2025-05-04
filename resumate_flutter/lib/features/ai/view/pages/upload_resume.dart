@@ -7,6 +7,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:resumate_flutter/core/utils/fonts/sf_pro_display.dart';
 import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
+import 'package:resumate_flutter/core/utils/widgets/custom_appbar.dart';
 import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
 import 'package:resumate_flutter/features/ai/view/widgets/analyzing_popup.dart';
@@ -144,36 +145,15 @@ class _UploadResumePageState extends State<UploadResumePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Upload Resume',
+        subtitle: "Get feedback tailored to you!",
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SfProDisplay(
-                        text: 'Upload Resume',
-                        fontSize: 26,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      SfProDisplay(
-                        text: "Get feedback tailored to you!",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        textColor: AppPallete.greyColor,
-                        lineheight: 0,
-                      ),
-                    ],
-                  ),
-                  NotificationsIcon(),
-                ],
-              ),
-
-              spaceH30,
               _buildDashedContainer(),
               spaceH20,
               _buildAnalyzeButton(),

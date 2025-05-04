@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/back_button.dart';
-import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 
-class AppBarWithNotificationIcon extends StatelessWidget
+class AppBarWithArrowOnly extends StatelessWidget
     implements PreferredSizeWidget {
   final bool showBackButton;
   final Color bgColor;
+  final Color arrowColor;
 
-  const AppBarWithNotificationIcon({
+  const AppBarWithArrowOnly({
     super.key,
     this.showBackButton = true,
     this.bgColor = AppPallete.whiteColor,
+    this.arrowColor = AppPallete.black,
   });
 
   @override
@@ -20,13 +21,7 @@ class AppBarWithNotificationIcon extends StatelessWidget
     return AppBar(
       backgroundColor: bgColor,
       elevation: 0,
-      leading: buildBackButton(),
-      actions: const [
-        Padding(
-          padding: EdgeInsets.only(right: 20.0),
-          child: NotificationsIcon(),
-        ),
-      ],
+      leading: buildBackButton(arrowColor: arrowColor),
     );
   }
 
