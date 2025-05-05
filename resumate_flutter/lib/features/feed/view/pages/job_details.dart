@@ -152,21 +152,23 @@ class JobDetailsPage extends StatelessWidget {
               ),
 
               spaceH50,
-              RoundedButton(
-                isLoading: feedController.isLoading.value,
-                label: 'Apply Now',
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder:
-                        (context) => ApplyJobPopup(
-                          email: job.company.email,
-                          phoneNo: job.company.phoneNumber,
-                        ),
-                  );
-                  feedController.applyForJob(jobId: job.id);
-                },
+              Obx(
+                () => RoundedButton(
+                  isLoading: feedController.isLoading.value,
+                  label: 'Apply Now',
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder:
+                          (context) => ApplyJobPopup(
+                            email: job.company.email,
+                            phoneNo: job.company.phoneNumber,
+                          ),
+                    );
+                    feedController.applyForJob(jobId: job.id);
+                  },
+                ),
               ),
             ],
           ),

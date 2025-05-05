@@ -58,18 +58,21 @@ class _SignInState extends State<SignIn> {
                         ),
 
                         spaceH50,
-                        RoundedButton(
-                          isLoading: controller.isLoading.value,
-                          label: 'Sign In',
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              controller.signIn(
-                                email: controller.email.text,
-                                password: controller.password.text,
-                              );
-                            }
-                          },
+                        Obx(
+                          () => RoundedButton(
+                            isLoading: controller.isLoading.value,
+                            label: 'Sign In',
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                controller.signIn(
+                                  email: controller.email.text,
+                                  password: controller.password.text,
+                                );
+                              }
+                            },
+                          ),
                         ),
+
                         spaceH50,
                         const SignUpOptions(text: 'or sign in with'),
                         spaceH50,

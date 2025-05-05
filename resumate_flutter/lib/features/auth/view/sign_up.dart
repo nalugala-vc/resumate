@@ -76,19 +76,22 @@ class _SignUpState extends State<SignUp> {
                           hintText: 'Confirm Password',
                         ),
                         spaceH50,
-                        RoundedButton(
-                          isLoading: controller.isLoading.value,
-                          label: 'Sign Up',
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              controller.signUp(
-                                email: controller.email.text,
-                                password: controller.password.text,
-                                name: controller.name.text,
-                              );
-                            }
-                          },
+                        Obx(
+                          () => RoundedButton(
+                            isLoading: controller.isLoading.value,
+                            label: 'Sign Up',
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                controller.signUp(
+                                  email: controller.email.text,
+                                  password: controller.password.text,
+                                  name: controller.name.text,
+                                );
+                              }
+                            },
+                          ),
                         ),
+
                         spaceH50,
                         const SignUpOptions(text: 'or sign up with'),
                         spaceH50,

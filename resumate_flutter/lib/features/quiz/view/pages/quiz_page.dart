@@ -285,20 +285,24 @@ class _QuizPageState extends State<QuizPage> {
                 else
                   SizedBox(width: 150),
 
-                RoundedButton(
-                  isLoading: resultsController.isLoading.value,
-                  label:
-                      currentIndex == questions.length - 1 ? "Finish" : "Next",
-                  onTap:
-                      currentIndex == questions.length - 1
-                          ? finishQuiz
-                          : nextQuestion,
-                  height: 50,
-                  backgroundColor: AppPallete.pink400,
-                  fontsize: 13,
-                  borderRadius: 30,
-                  borderColor: AppPallete.pink400,
-                  width: 150,
+                Obx(
+                  () => RoundedButton(
+                    isLoading: resultsController.isLoading.value,
+                    label:
+                        currentIndex == questions.length - 1
+                            ? "Finish"
+                            : "Next",
+                    onTap:
+                        currentIndex == questions.length - 1
+                            ? finishQuiz
+                            : nextQuestion,
+                    height: 50,
+                    backgroundColor: AppPallete.pink400,
+                    fontsize: 13,
+                    borderRadius: 30,
+                    borderColor: AppPallete.pink400,
+                    width: 150,
+                  ),
                 ),
               ],
             ),
