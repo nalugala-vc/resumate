@@ -87,6 +87,14 @@ Here are some screenshots of the app in action:
 ![Screenshot 2](screenshots/screenshot2.png)
 ![Screenshot 3](screenshots/screenshot3.png)
 
+## **Links**
+
+- **APK Download**: [Download the APK](https://drive.google.com/drive/folders/1Ath_rNVLWPxO6YylJf1BtSAEzQjJ2iaB?usp=drive_link)
+- **Figma Design**: [View the Figma design](https://www.figma.com/design/MoGYjG2sGtVZHkIYeHtuLx/ResuMate?node-id=44-2304&t=VC1dFgCELWCbtVb2-1)
+- **Web Application**: [Access the web version](https://heroic-pavlova-0dcaef.netlify.app/)
+- **Backend API**: [View the backend API documentation](https://resumate-backend-6dis.onrender.com)
+
+
 ## **Contributing**
 
 We welcome contributions to **Resumate**! Please fork the repository, make your changes, and create a pull request. We will review your changes and get back to you.
