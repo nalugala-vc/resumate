@@ -234,6 +234,10 @@ class _ReadinessIndicatorState extends State<ReadinessIndicator> {
                           selectedTrack = value!;
                           final unformatted = _unformatTrackName(value);
                           feedController.selectedTrack.value = unformatted;
+
+                          print(
+                            'changed xxxxx ${feedController.selectedTrack.value} ',
+                          );
                         });
                       },
                     ),
