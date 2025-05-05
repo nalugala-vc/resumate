@@ -48,7 +48,7 @@ The goal of **Resumate** is to design an intuitive and engaging **AI-powered car
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/resumate_flutter.git
+    git clone https://github.com/nalugala-vc/resumate
     cd resumate_flutter
     ```
 
