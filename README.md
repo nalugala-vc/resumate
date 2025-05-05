@@ -83,9 +83,12 @@ The goal of **Resumate** is to design an intuitive and engaging **AI-powered car
 
 Here are some screenshots of the app in action:
 
-![Screenshot 1](screenshots/screenshot1.png)
-![Screenshot 2](screenshots/screenshot2.png)
-![Screenshot 3](screenshots/screenshot3.png)
+<p align="center">
+  <img src="screenshots/screenshot1.png" alt="Screenshot 1" width="300"/>
+  <img src="screenshots/screenshot2.png" alt="Screenshot 2" width="300"/>
+  <img src="screenshots/screenshot3.png" alt="Screenshot 3" width="300"/>
+</p>
+
 
 ## **Links**
 
