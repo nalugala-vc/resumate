@@ -22,8 +22,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
-          channel: 'stable'
+          flutter-version: '3.32.0-0.3.pre'
+          channel: 'beta'
 
       - name: Cache Flutter Dependencies
         uses: actions/cache@v3
