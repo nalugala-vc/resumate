@@ -48,9 +48,11 @@ jobs:
 
       - name: Get dependencies
         run: flutter pub get
+        working-directory: resumate_flutter
 
       - name: Run Unit and Widget Tests
         run: flutter test --coverage
+        working-directory: resumate_flutter
 
       - name: Upload Test Coverage Report
         uses: actions/upload-artifact@v4
@@ -62,23 +64,27 @@ jobs:
       # Verify setup with flutter doctor
       - name: Run flutter doctor
         run: flutter doctor
+        working-directory: resumate_flutter
 
       # Build Release APK
       - name: Build APK
         run: flutter build apk --release
+        working-directory: resumate_flutter
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
           name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: resumate_flutter/build/app/outputs/flutter-apk/app-release.apk
 
       # Build Debug APK
       - name: Build Debug APK
         run: flutter build apk --debug
+        working-directory: resumate_flutter
+        
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          path: resumate_flutter/build/app/outputs/flutter-apk/app-debug.apk
