@@ -14,13 +14,19 @@ Many job seekers struggle to find the right career path, optimize their resumes,
 
 The goal of **Resumate** is to design an intuitive and engaging **AI-powered career mentoring platform** that helps users navigate their career journey with ease. Resumate will provide personalized career roadmaps, AI-driven resume reviews, and mock interview coaching, ensuring job seekers can confidently pursue their ideal roles.
 
-## **Features**
+## **Features in MVP**
+
+- **AI-Powered Resume Reviews**: Optimize your resume with AI-driven suggestions for improvement.
+- **AI-Powered Career Quiz**: Get to know where you at at your career and what needs to be worked on.
+- **Job Opportunities**: Discover job matches tailored to your skills and preferences.
+- **Career Guidance**: Receive ongoing support from AI bots to help you navigate the job search process.
+
+## **To Be Implemented**
 
 - **Personalized Career Roadmaps**: Get customized guidance based on your career goals.
-- **AI-Powered Resume Reviews**: Optimize your resume with AI-driven suggestions for improvement.
 - **Mock Interview Coaching**: Practice mock interviews and get feedback on your performance.
-- **Job Opportunities**: Discover job matches tailored to your skills and preferences.
-- **Career Guidance**: Receive ongoing support from AI mentors to help you navigate the job search process.
+- **Career Guidance from Real Mentors**: Receive ongoing support from people who have already made it in your field.
+- **Networking**: Get to network with mentors, employers and even fellow job seakers through the chat section.
 
 ## **Tech Stack**
 
