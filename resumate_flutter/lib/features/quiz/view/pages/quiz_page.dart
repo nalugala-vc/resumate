@@ -5,7 +5,6 @@ import 'package:resumate_flutter/core/utils/spacers/spacers.dart';
 import 'package:resumate_flutter/core/utils/theme/app_pallette.dart';
 import 'package:resumate_flutter/core/utils/widgets/notifications_icon.dart';
 import 'package:resumate_flutter/core/utils/widgets/rounded_button.dart';
-import 'package:resumate_flutter/features/auth/viewmodel/auth_controller.dart';
 import 'package:resumate_flutter/features/quiz/model/question.dart';
 import 'package:resumate_flutter/features/quiz/model/skills_category.dart';
 import 'package:resumate_flutter/features/quiz/view/pages/test_results.dart';
@@ -18,6 +17,7 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   int currentIndex = 0;
+  final resultsController = Get.put(ResultsController());
   Map<int, int> selectedAnswers = {};
 
   void selectAnswer(int index) {
@@ -124,8 +124,6 @@ class _QuizPageState extends State<QuizPage> {
 
     String level = determineLevel(results[topCategory]!);
     List<String> recommendations = getSkillRecommendations(topCategory, level);
-
-    final resultsController = Get.put(ResultsController());
 
     resultsController.setResultsData(
       resultsData: results,
@@ -288,6 +286,7 @@ class _QuizPageState extends State<QuizPage> {
                   SizedBox(width: 150),
 
                 RoundedButton(
+                  isLoading: resultsController.isLoading.value,
                   label:
                       currentIndex == questions.length - 1 ? "Finish" : "Next",
                   onTap:

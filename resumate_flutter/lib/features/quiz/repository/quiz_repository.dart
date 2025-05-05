@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:resumate_flutter/core/api/config.dart';
 import 'package:resumate_flutter/core/api/endpoints.dart';
@@ -40,6 +41,8 @@ class QuizRepository {
       );
 
       final resBodyMap = jsonDecode(response.body) as Map<String, dynamic>;
+
+      debugPrint(resBodyMap.toString());
 
       if (response.statusCode != 200) {
         final message = resBodyMap['message'] ?? 'Something went wrong';

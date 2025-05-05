@@ -3,7 +3,7 @@ import { User } from '../models/User';
 import * as jwt from 'jsonwebtoken';
 import { JwtPayload } from 'jsonwebtoken';
 
-const JWT_SECRET = 'yourSuperSecret';
+
 
 export class SaveQuizResults extends Action {
   constructor() {
@@ -46,7 +46,7 @@ export class SaveQuizResults extends Action {
   
     let userId;
     try {
-      const decoded = jwt.verify(token, JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
       if (typeof decoded === 'string') {
         throw new Error('Invalid token payload');
       } else {
@@ -93,7 +93,7 @@ export class GetQuizResults extends Action {
   
       let userId;
       try {
-        const decoded = jwt.verify(token, JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         
 
 let userId: string;

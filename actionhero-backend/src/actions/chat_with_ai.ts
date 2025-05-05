@@ -3,7 +3,7 @@ import { CohereClient } from "cohere-ai";
 
 // Setup Cohere
 const cohere = new CohereClient({
-  token: process.env.COHERE_API_KEY || "fJwZnBfOXnuaATnzma2cKr6lOmwa7U4WG5Y7tr93", 
+  token: process.env.COHERE_TOKEN 
 });
 
 export class ChatWithAI extends Action {

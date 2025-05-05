@@ -1,10 +1,8 @@
 import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:docx_to_text/docx_to_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pdf_text/pdf_text.dart';
+import 'package:read_pdf_text/read_pdf_text.dart';
 import 'package:resumate_flutter/core/controller/base_controller.dart';
 import 'package:resumate_flutter/features/ai/model/ChatMessage.dart';
 import 'package:resumate_flutter/features/ai/repository/ai_repository.dart';
@@ -51,18 +49,15 @@ class AiController extends BaseController {
       final String filePath = file.path.toLowerCase();
       String? extractedText;
 
-      // Update progress if callback provided
       onProgress?.call('Starting text extraction...');
 
       if (filePath.endsWith('.pdf')) {
-        // Handle PDF files
         onProgress?.call('Processing PDF file...');
-        PDFDoc doc = await PDFDoc.fromFile(file);
-        extractedText = await doc.text;
+
+        extractedText = await ReadPdfText.getPDFtext(file.path);
       } else if (filePath.endsWith('.docx')) {
-        // Handle DOCX files
         onProgress?.call('Processing DOCX file...');
-        extractedText = docxToText(file.path as Uint8List);
+        extractedText = docxToText(file.readAsBytesSync());
       } else if (filePath.endsWith('.doc')) {
         onProgress?.call('Processing DOC file...');
         throw UnsupportedError(

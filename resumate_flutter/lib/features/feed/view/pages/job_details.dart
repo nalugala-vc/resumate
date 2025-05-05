@@ -153,6 +153,7 @@ class JobDetailsPage extends StatelessWidget {
 
               spaceH50,
               RoundedButton(
+                isLoading: feedController.isLoading.value,
                 label: 'Apply Now',
                 onTap: () {
                   showDialog(
