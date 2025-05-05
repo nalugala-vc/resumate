@@ -69,8 +69,8 @@ The goal of **Resumate** is to design an intuitive and engaging **AI-powered car
 1. Clone the backend repository:
 
     ```bash
-    git clone https://github.com/yourusername/resumate_backend.git
-    cd resumate_backend
+    git clone https://github.com/nalugala-vc/resumate
+    cd actionhero-backend
     ```
 
 2. Install dependencies:
