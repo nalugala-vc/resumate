@@ -35,7 +35,7 @@ export const DEFAULT = {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods":
           "HEAD, GET, POST, PUT, PATCH, DELETE, OPTIONS, TRACE",
-        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
       },
       // Route that actions will be served from; secondary route against this route will be treated as actions,

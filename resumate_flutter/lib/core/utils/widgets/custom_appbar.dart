@@ -49,6 +49,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 shouldTruncate: false,
                 lineheight: 0,
               ),
+
               spaceH10,
             ],
           ),

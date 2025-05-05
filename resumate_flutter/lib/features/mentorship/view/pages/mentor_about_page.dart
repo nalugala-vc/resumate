@@ -201,6 +201,7 @@ class MentorAboutPage extends StatelessWidget {
                 backgroundColor: AppPallete.pink400,
               ),
             ),
+            spaceH30,
           ],
         ),
       ),
