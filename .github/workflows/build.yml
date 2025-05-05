@@ -36,15 +36,15 @@ jobs:
       # Decode Keystore
       - name: Decode Keystore
         run: |
-          echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > android/app/upload-keystore.jks
+          echo "${{ secrets.KEYSTORE_FILE }}" | base64 --decode > resumate_flutter/android/app/upload-keystore.jks
 
       # Set up key.properties file
       - name: Set up key.properties
         run: |
-          echo "storeFile=../app/upload-keystore.jks" > android/key.properties  # Match local config
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> android/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "storeFile=../app/upload-keystore.jks" > resumate_flutter/android/key.properties  # Match local config
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> resumate_flutter/android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> resumate_flutter/android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> resumate_flutter/android/key.properties
 
       - name: Get dependencies
         run: flutter pub get
